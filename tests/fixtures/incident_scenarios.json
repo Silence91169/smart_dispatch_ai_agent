@@ -1,0 +1,67 @@
+{
+  "scenarios": [
+    {
+      "name": "earthquake_chaos",
+      "description": "30 calls in 2 minutes — lots of duplicates, mix of MEDICAL + FIRE + HAZARD simulating mass-casualty aftermath",
+      "seed": 42,
+      "total_calls": 30,
+      "duplicate_ratio": 0.4,
+      "time_window_minutes": 2,
+      "template_mix": {
+        "house_fire_residential": 0.2,
+        "apartment_fire_highrise": 0.1,
+        "cardiac_arrest": 0.2,
+        "gas_leak": 0.15,
+        "downed_power_line": 0.15,
+        "car_accident_injury": 0.1,
+        "person_choking": 0.1
+      }
+    },
+    {
+      "name": "quiet_night",
+      "description": "10 calls in 10 minutes — low duplicate rate, standard nightly mix",
+      "seed": 7,
+      "total_calls": 10,
+      "duplicate_ratio": 0.1,
+      "time_window_minutes": 10,
+      "template_mix": null
+    },
+    {
+      "name": "overload_test",
+      "description": "50 calls in 1 minute — stress test for throughput and dedup logic",
+      "seed": 99,
+      "total_calls": 50,
+      "duplicate_ratio": 0.3,
+      "time_window_minutes": 1,
+      "template_mix": null
+    },
+    {
+      "name": "crime_wave",
+      "description": "20 calls in 5 minutes — heavily weighted toward violent crime, high duplicate rate",
+      "seed": 13,
+      "total_calls": 20,
+      "duplicate_ratio": 0.5,
+      "time_window_minutes": 5,
+      "template_mix": {
+        "armed_robbery": 0.3,
+        "assault_in_progress": 0.4,
+        "car_accident_injury": 0.15,
+        "cardiac_arrest": 0.15
+      }
+    },
+    {
+      "name": "highway_incident",
+      "description": "15 calls in 3 minutes — multi-vehicle accident with cascading secondary calls, high duplicate rate",
+      "seed": 55,
+      "total_calls": 15,
+      "duplicate_ratio": 0.6,
+      "time_window_minutes": 3,
+      "template_mix": {
+        "car_accident_injury": 0.5,
+        "car_accident_minor": 0.2,
+        "cardiac_arrest": 0.15,
+        "downed_power_line": 0.15
+      }
+    }
+  ]
+}
