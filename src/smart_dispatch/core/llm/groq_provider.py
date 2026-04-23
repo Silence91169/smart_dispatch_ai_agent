@@ -3,15 +3,39 @@
 import asyncio
 import json
 import logging
+import re
 from typing import Type
 
-from groq import AsyncGroq
+from groq import AsyncGroq, RateLimitError
 from pydantic import BaseModel
 
 from .base import LLMProvider, LLMStructuredOutputError
 from .schemas import LLMResponse, LLMUsage
 
 logger = logging.getLogger(__name__)
+
+_RETRY_AFTER_RE = re.compile(r"try again in ([\d.]+)s", re.IGNORECASE)
+_MAX_RATE_RETRIES = 6
+
+
+def _parse_retry_seconds(msg: str) -> float:
+    """Extract the retry-after delay from a Groq 429 error message."""
+    m = _RETRY_AFTER_RE.search(msg)
+    return float(m.group(1)) if m else 5.0
+
+
+async def _with_rate_retry(coro_factory):
+    """Call coro_factory() and retry transparently on Groq TPM/TPD 429s."""
+    for attempt in range(_MAX_RATE_RETRIES):
+        try:
+            return await coro_factory()
+        except RateLimitError as exc:
+            wait = _parse_retry_seconds(str(exc))
+            if attempt == _MAX_RATE_RETRIES - 1:
+                raise
+            logger.warning("Groq rate limit — waiting %.1fs then retrying (attempt %d/%d)…",
+                           wait, attempt + 1, _MAX_RATE_RETRIES)
+            await asyncio.sleep(wait + 0.5)  # small buffer
 
 
 class GroqProvider(LLMProvider):
@@ -54,12 +78,12 @@ class GroqProvider(LLMProvider):
             Standardised :class:`LLMResponse`.
         """
         messages = self._build_messages(prompt, system)
-        response = await self._client.chat.completions.create(
+        response = await _with_rate_retry(lambda: self._client.chat.completions.create(
             model=self.model,
             messages=messages,
             temperature=temperature,
             max_tokens=max_tokens,
-        )
+        ))
         choice = response.choices[0]
         usage = response.usage
         return LLMResponse(
@@ -114,13 +138,13 @@ class GroqProvider(LLMProvider):
                     f"{json.dumps(schema.model_json_schema(), indent=2)}"
                 )
             messages = self._build_messages(prompt, combined_system)
-            response = await self._client.chat.completions.create(
+            response = await _with_rate_retry(lambda: self._client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 response_format={"type": "json_object"},
                 temperature=temperature,
                 max_tokens=max_tokens,
-            )
+            ))
             raw_content = response.choices[0].message.content or ""
             try:
                 return schema.model_validate_json(raw_content)

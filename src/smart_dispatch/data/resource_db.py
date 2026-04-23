@@ -6,11 +6,11 @@ import asyncio
 import enum as PyEnum
 from datetime import datetime, timezone
 from typing import Optional
+from uuid import uuid4
 
-from sqlalchemy import String, Float, Integer, DateTime, Enum as SAEnum
+from sqlalchemy import Boolean, Float, Integer, String, DateTime, Enum as SAEnum, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import select
 
 from smart_dispatch.config import settings
 
@@ -48,12 +48,43 @@ class Resource(Base):
         return f"<Resource {self.call_sign} [{self.status.value}] @ {self.current_node_id}>"
 
 
+class Incident(Base):
+    __tablename__ = "incidents"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    incident_type: Mapped[str] = mapped_column(String, nullable=False)
+    severity: Mapped[str] = mapped_column(String, nullable=False)
+    location_node_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    location_raw: Mapped[str] = mapped_column(String, nullable=False)
+    status: Mapped[str] = mapped_column(String, nullable=False, default="pending")
+    duplicate_call_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+
+    def __repr__(self) -> str:
+        return f"<Incident {self.id} [{self.status}] {self.incident_type}/{self.severity}>"
+
+
+class DispatchLog(Base):
+    __tablename__ = "dispatch_logs"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    incident_id: Mapped[str] = mapped_column(String, nullable=False)
+    resource_id: Mapped[str] = mapped_column(String, nullable=False)
+    dispatched_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    travel_time_sec: Mapped[float] = mapped_column(Float, nullable=False)
+    reassigned: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    def __repr__(self) -> str:
+        return f"<DispatchLog {self.resource_id}→{self.incident_id} {self.travel_time_sec:.0f}s>"
+
+
 class ResourceNotAvailableError(Exception):
     """Raised when a dispatch is attempted on a non-AVAILABLE resource."""
 
 
 class ResourceDB:
-    """Async database interface for the resource fleet."""
+    """Async database interface for the resource fleet and incidents."""
 
     def __init__(self, db_url: Optional[str] = None) -> None:
         url = db_url or settings.db_path
@@ -73,6 +104,8 @@ class ResourceDB:
 
     def session(self) -> AsyncSession:
         return self._session_factory()
+
+    # -------- Resource methods --------
 
     async def add_resource(self, resource: Resource) -> None:
         async with self._session_factory() as sess:
@@ -94,6 +127,10 @@ class ResourceDB:
                 stmt = stmt.where(Resource.resource_type == resource_type)
             result = await sess.execute(stmt)
             return list(result.scalars().all())
+
+    async def available_resources_by_type(self, resource_type: str) -> list[Resource]:
+        """Convenience: list AVAILABLE vehicles of a given type."""
+        return await self.list_resources(status=ResourceStatus.AVAILABLE, resource_type=resource_type)
 
     async def dispatch_resource(
         self,
@@ -126,13 +163,15 @@ class ResourceDB:
                     resource.total_dispatches += 1
         return resource
 
-    async def update_status(
+    async def update_resource_status(
         self,
         resource_id: str,
         new_status: ResourceStatus,
-        incident_id: Optional[str] = None,
+        current_node: Optional[str] = None,
+        new_incident_id: Optional[str] = None,
+        eta_sec: Optional[float] = None,
     ) -> Resource:
-        """Update a resource's status, optionally clearing the incident link."""
+        """Update a resource's status. Safe for re-routing — does NOT check AVAILABLE guard."""
         async with self._session_factory() as sess:
             async with sess.begin():
                 resource = await sess.get(Resource, resource_id)
@@ -140,11 +179,86 @@ class ResourceDB:
                     raise KeyError(f"Resource '{resource_id}' not found")
                 resource.status = new_status
                 resource.last_status_change = datetime.now(timezone.utc)
-                if incident_id is not None:
-                    resource.current_incident_id = incident_id
+                if current_node is not None:
+                    resource.current_node_id = current_node
+                if new_incident_id is not None:
+                    resource.current_incident_id = new_incident_id
+                    resource.total_dispatches += 1
+                if eta_sec is not None:
+                    resource.eta_to_destination_sec = eta_sec
                 if new_status in (ResourceStatus.AVAILABLE, ResourceStatus.RETURNING):
+                    resource.current_incident_id = None
                     resource.eta_to_destination_sec = None
         return resource
+
+    # kept for backwards compatibility with existing scripts
+    async def update_status(
+        self,
+        resource_id: str,
+        new_status: ResourceStatus,
+        incident_id: Optional[str] = None,
+    ) -> Resource:
+        return await self.update_resource_status(
+            resource_id=resource_id,
+            new_status=new_status,
+            new_incident_id=incident_id,
+        )
+
+    # -------- Incident methods --------
+
+    async def create_incident(self, incident: Incident) -> None:
+        async with self._session_factory() as sess:
+            async with sess.begin():
+                sess.add(incident)
+
+    async def get_incident(self, incident_id: str) -> Optional[Incident]:
+        async with self._session_factory() as sess:
+            return await sess.get(Incident, incident_id)
+
+    async def update_incident_status(self, incident_id: str, status: str) -> None:
+        async with self._session_factory() as sess:
+            async with sess.begin():
+                incident = await sess.get(Incident, incident_id)
+                if incident is not None:
+                    incident.status = status
+                    incident.updated_at = datetime.now(timezone.utc)
+
+    async def increment_duplicate_count(self, incident_id: str) -> None:
+        async with self._session_factory() as sess:
+            async with sess.begin():
+                incident = await sess.get(Incident, incident_id)
+                if incident is not None:
+                    incident.duplicate_call_count += 1
+                    incident.updated_at = datetime.now(timezone.utc)
+
+    async def list_incidents(self, status: Optional[str] = None) -> list[Incident]:
+        async with self._session_factory() as sess:
+            stmt = select(Incident)
+            if status is not None:
+                stmt = stmt.where(Incident.status == status)
+            stmt = stmt.order_by(Incident.created_at)
+            result = await sess.execute(stmt)
+            return list(result.scalars().all())
+
+    # -------- Dispatch log methods --------
+
+    async def log_dispatch(self, log: DispatchLog) -> None:
+        async with self._session_factory() as sess:
+            async with sess.begin():
+                sess.add(log)
+
+    async def list_dispatch_logs(
+        self, incident_id: Optional[str] = None
+    ) -> list[DispatchLog]:
+        async with self._session_factory() as sess:
+            stmt = select(DispatchLog)
+            if incident_id is not None:
+                stmt = stmt.where(DispatchLog.incident_id == incident_id)
+            stmt = stmt.order_by(DispatchLog.dispatched_at)
+            result = await sess.execute(stmt)
+            return list(result.scalars().all())
+
+    # -------- Lifecycle --------
 
     async def close(self) -> None:
         await self._engine.dispose()
