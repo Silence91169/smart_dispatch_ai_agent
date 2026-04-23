@@ -52,3 +52,23 @@ async def seed_fleet(db: ResourceDB) -> list[Resource]:
     for resource in resources:
         await db.add_resource(resource)
     return resources
+
+
+async def seed_resources(db: ResourceDB, reset: bool = False) -> list[Resource]:
+    """Seed fleet — skips vehicles that already exist (idempotent).
+
+    Args:
+        db: ResourceDB instance.
+        reset: If True, drops + recreates all tables first.
+    """
+    if reset:
+        await db.reset_db()
+
+    seeded: list[Resource] = []
+    for spec in INITIAL_FLEET:
+        existing = await db.get_resource(spec["id"])
+        if existing is None:
+            r = _make_resource(spec)
+            await db.add_resource(r)
+            seeded.append(r)
+    return seeded

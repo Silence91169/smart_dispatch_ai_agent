@@ -23,6 +23,10 @@ dependencies = [
     "sentence-transformers>=3.0",
     "faiss-cpu>=1.8",
     "numpy>=1.26",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "langgraph>=0.2",
+    "websockets>=13",
 ]
 
 [project.optional-dependencies]

@@ -102,6 +102,15 @@ class ResourceDB:
         async with self._engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
 
+    async def init_db(self) -> None:
+        """Alias for create_tables — idempotent."""
+        await self.create_tables()
+
+    async def reset_db(self) -> None:
+        """Drop and recreate all tables (destructive)."""
+        await self.drop_tables()
+        await self.create_tables()
+
     def session(self) -> AsyncSession:
         return self._session_factory()
 
@@ -231,12 +240,14 @@ class ResourceDB:
                     incident.duplicate_call_count += 1
                     incident.updated_at = datetime.now(timezone.utc)
 
-    async def list_incidents(self, status: Optional[str] = None) -> list[Incident]:
+    async def list_incidents(
+        self, status: Optional[str] = None, limit: int = 500
+    ) -> list[Incident]:
         async with self._session_factory() as sess:
             stmt = select(Incident)
             if status is not None:
                 stmt = stmt.where(Incident.status == status)
-            stmt = stmt.order_by(Incident.created_at)
+            stmt = stmt.order_by(Incident.created_at).limit(limit)
             result = await sess.execute(stmt)
             return list(result.scalars().all())
 
