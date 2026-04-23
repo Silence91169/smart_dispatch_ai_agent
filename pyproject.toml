@@ -16,6 +16,10 @@ dependencies = [
     "httpx",
     "faker>=30.0",
     "rich",
+    "networkx>=3.2",
+    "sqlalchemy>=2.0",
+    "aiosqlite",
+    "geopy",
 ]
 
 [project.optional-dependencies]

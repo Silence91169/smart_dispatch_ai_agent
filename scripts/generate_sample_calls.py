@@ -1,4 +1,4 @@
-"""CLI script to generate and dump mock 911 calls."""
+"""CLI script to generate and dump mock 112 calls."""
 
 import argparse
 import json
@@ -44,7 +44,7 @@ def _print_table(calls: list[MockCall]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Generate mock 911 call transcripts for the Smart Dispatch system."
+        description="Generate mock 112 call transcripts for the Smart Dispatch system."
     )
     parser.add_argument("--count", type=int, default=10, help="Number of calls to generate")
     parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducibility")

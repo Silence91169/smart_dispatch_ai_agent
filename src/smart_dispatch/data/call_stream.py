@@ -1,4 +1,4 @@
-"""Async streaming interface for 911 calls."""
+"""Async streaming interface for 112 calls."""
 
 import asyncio
 from datetime import datetime

@@ -2,16 +2,16 @@
   {
     "call": {
       "call_id": "gc_001",
-      "transcript": "There's a house on fire at 4th and Main! The whole second floor is engulfed, flames are shooting out the windows. I don't know if anyone is still inside!",
+      "transcript": "Gole Market ke paas ek ghar mein aag lagi hai! Main Connaught Place area mein hoon, the whole upper floor is on fire, flames shooting out of the windows. I don't know if anyone is still inside!",
       "timestamp": "2024-03-15T02:01:00",
-      "caller_phone": "555-0101",
+      "caller_phone": "9811-000101",
       "event_id": "event_001"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["4th", "main"],
+      "location_keywords": ["gole market", "connaught"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -19,101 +19,101 @@
   {
     "call": {
       "call_id": "gc_002",
-      "transcript": "Oh god there's a massive fire on Main Avenue near 4th Street. Huge flames coming out of a house, black smoke everywhere. I'm right outside, I already saw someone calling 911 but I'm calling too.",
+      "transcript": "Bhai please aao jaldi, CP ke paas ek ghar mein fire lag gayi hai, Gole Market side, bahut bada fire hai, kisne 112 call kiya already but main bhi kar raha hoon!",
       "timestamp": "2024-03-15T02:02:15",
-      "caller_phone": "555-0102",
+      "caller_phone": "9811-000102",
       "event_id": "event_001"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["main", "4th"],
+      "location_keywords": ["cp", "gole market"],
       "is_duplicate_of": "gc_001"
     },
-    "notes": "Different passerby reporting the same 4th & Main house fire from outside"
+    "notes": "Different passerby reporting the same Gole Market fire near CP"
   },
   {
     "call": {
       "call_id": "gc_003",
-      "transcript": "Oh my god okay I'm in my apartment and the fire alarm just went off and I looked out my door and the hallway is FULL of smoke, I can't see more than five feet in front of me. I'm on the sixth floor of Oak Street Apartments. I don't know where the fire is but the smoke is really thick and black and it smells like burning plastic. My neighbor tried to use the elevator and it opened and there was smoke pouring out of it. I have asthma and I'm already having trouble breathing just in my doorway. My husband is trying to reach the stairwell to see if it's clear. There are two small children in the apartment across the hall from me and I knocked but nobody answered. Please send help NOW, we need firefighters with ladders, and we need ambulances because people up here are going to need oxygen. I don't know how many people are in this building but it's a big complex, completely full.",
+      "transcript": "Oh god okay main apne flat mein hoon aur fire alarm baj raha hai aur main ne apna darwaza khola toh poora hallway smoke se bhara hua hai, main kuch nahi dekh sakta pehle paanch foot ke baad. Main Karol Bagh ke apartment complex mein sixth floor pe hoon. Mujhe nahi pata aag kahan lagi hai but smoke bahut kaali aur ghani hai aur burning plastic ki smell aa rahi hai. Mere neighbour ne lift try ki aur lift mein se dhuan nikal raha tha. Mujhe asthma hai aur main already darwaze mein khara hoon toh breathe karna mushkil ho raha hai. Mera husband stairwell ki taraf ja raha hai. Mere samne wale flat mein do chhote bacche hain aur maine knock kiya but koi nahin aaya. Please abhi help bhejo, firefighters ke saath ladders chahiye, aur ambulances chahiye kyunki log yahan oxygen ki zaroorat padegi. I don't know how many people are in this building but it's a big complex, poora bhara hua hai.",
       "timestamp": "2024-03-15T02:07:30",
-      "caller_phone": "555-0103",
+      "caller_phone": "9811-000103",
       "event_id": "event_003"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["oak street", "apartment"],
+      "location_keywords": ["karol bagh", "apartment"],
       "is_duplicate_of": null
     },
-    "notes": "Long rambling call — caller is trapped on 6th floor with asthma, children unaccounted for"
+    "notes": "Long rambling call — caller trapped on 6th floor with asthma, children unaccounted for"
   },
   {
     "call": {
       "call_id": "gc_004",
-      "transcript": "Fire at Union Station! The west wing storage area is fully on fire. I'm a station employee and we've evacuated the main concourse but there are still workers in the basement. Flames are visible through the windows on the ground floor.",
+      "transcript": "Fire at Chandni Chowk! The kirana shop andar se poori tarah jal rahi hai aur aas paas wali dukanon mein bhi aag phadkne wali hai. Old Delhi ke purane buildings hain yahan, please jaldi aao, ek baar aag faili toh mushkil ho jaayega!",
       "timestamp": "2024-03-15T02:15:00",
-      "caller_phone": "555-0104",
+      "caller_phone": "9811-000104",
       "event_id": "event_004"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["union station"],
+      "location_keywords": ["chandni chowk"],
       "is_duplicate_of": null
     },
-    "notes": "Caller is an employee with specific situational knowledge — workers still unaccounted for in basement"
+    "notes": "Caller aware of old building density in Old Delhi — correct escalation of concern"
   },
   {
     "call": {
       "call_id": "gc_005",
-      "transcript": "Car on fire on Highway 9, somewhere near mile marker 12. I don't know if anyone is inside — the driver's door is open which maybe means they got out? But I honestly can't tell. The engine compartment is fully on fire and it's spreading to the passenger area.",
+      "transcript": "Gaadi mein aag lag gayi hai airport expressway pe, IGI Airport Terminal 3 ke bilkul paas. Driver ka darwaza khula hua hai — shayad nikal gaya? But main sure nahi hoon. Engine compartment fully jal raha hai aur passenger area mein spread ho raha hai.",
       "timestamp": "2024-03-15T02:20:00",
-      "caller_phone": "555-0105",
+      "caller_phone": "9811-000105",
       "event_id": "event_005"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "HIGH",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["highway 9", "mile marker 12"],
+      "location_keywords": ["airport", "igi"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — occupant status unclear, open door suggests escape but not confirmed"
+    "notes": "Ambiguous severity — open door suggests driver escaped but not confirmed"
   },
   {
     "call": {
       "call_id": "gc_006",
-      "transcript": "Uh, there's a dumpster on fire behind Lincoln Elementary School. It's like, pretty big already, and the dumpster is maybe six feet from the wooden fence. The wind is picking up. I don't see any kids around — school's out — but if it jumps that fence it could hit the building.",
+      "transcript": "Uh, Rohini Sector 7 mein ek government school ke peeche garbage dump mein aag lag gayi hai. Badi aag ho gayi hai aur dump school wall se chhe foot door hai. Hawa bhi chal rahi hai. Bacche nahi hain — school band hai — but agar wall tak pahunchi toh building tak ja sakti hai.",
       "timestamp": "2024-03-15T02:25:00",
-      "caller_phone": "555-0106",
+      "caller_phone": "9811-000106",
       "event_id": "event_006"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "MEDIUM",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["lincoln", "school"],
+      "location_keywords": ["rohini"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — contained dumpster fire but proximity to wooden fence and building could escalate"
+    "notes": "Ambiguous severity — contained garbage fire but proximity to school building with wind could escalate"
   },
   {
     "call": {
       "call_id": "gc_007",
-      "transcript": "Fire in Riverside Park! The dry grass caught and it's spreading really fast toward the tree line. I'd estimate it's already fifty feet wide and growing. The wind is not helping. There are some people running away from it near the south trail.",
+      "transcript": "India Gate ke paas lawn mein aag lag gayi hai! Sukhi ghans pakad li hai aur bahut tez fail rahi hai tree line ki taraf. Already fifty foot wide ho gayi hai aur hawa tez ho rahi hai. Kuch log park mein the jo bhaag rahe hain.",
       "timestamp": "2024-03-15T02:30:00",
-      "caller_phone": "555-0107",
+      "caller_phone": "9811-000107",
       "event_id": "event_007"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "HIGH",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["riverside park"],
+      "location_keywords": ["india gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -121,50 +121,50 @@
   {
     "call": {
       "call_id": "gc_008",
-      "transcript": "PLEASE HURRY there's a fire at my neighbor's house! I'm at... oh god... it's 5th and Maple? No wait, it's 5th and Broadway, the house with the green shutters! The whole front porch is on fire and I can hear children screaming inside. I can't get to the door, the fire is blocking it. PLEASE.",
+      "transcript": "PLEASE JALDI BHEJO, mere padosi ke ghar mein aag lagi hai! Main hoon... hey bhagwan... Lajpat Nagar mein? Nahi wait, yeh Saket hai, green gate wali building, second lane mein! Poora porch jal raha hai aur andar se bacchon ki awaaz aa rahi hai. Main darwaze tak nahi ja sakta, aag block kar rahi hai. PLEASE!",
       "timestamp": "2024-03-15T02:35:00",
-      "caller_phone": "555-0108",
+      "caller_phone": "9811-000108",
       "event_id": "event_008"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["5th", "broadway"],
+      "location_keywords": ["saket", "lajpat"],
       "is_duplicate_of": null
     },
-    "notes": "Conflicting address — caller gives two intersections before correcting; children audibly inside"
+    "notes": "Conflicting address — caller gives Lajpat Nagar first then corrects to Saket; children audibly inside"
   },
   {
     "call": {
       "call_id": "gc_009",
-      "transcript": "Um, I'm standing outside City Hall Plaza and there's a lot of smoke coming out of a second-floor window. I don't see any flames at all, it could be nothing? Like maybe an overheated piece of equipment? But it smells weird, kind of chemical. There's no alarm going off as far as I can tell.",
+      "transcript": "Um, main Nehru Place ke paas khada hoon aur ek badi commercial building ki second floor se bahut dhuan aa raha hai. Koi flames nahi dikh rahi, kuch overheated equipment ho sakta hai? Lekin smell ajeeb si hai, thodi chemical. Alarm bhi nahi baj raha jahan tak main sun sakta hoon.",
       "timestamp": "2024-03-15T02:40:00",
-      "caller_phone": "555-0109",
+      "caller_phone": "9811-000109",
       "event_id": "event_009"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "MEDIUM",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["city hall"],
+      "location_keywords": ["nehru place"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — smoke present but caller doubts themselves; no visible flames, no alarm"
+    "notes": "Ambiguous severity — smoke present but caller doubts themselves; no visible flames"
   },
   {
     "call": {
       "call_id": "gc_010",
-      "transcript": "Garage fire at the corner of Maple and 3rd. The garage is fully involved but I'm pretty sure no one is inside, the family ran out. The flames are licking the side wall of the main house now though. You need to move fast.",
+      "transcript": "Garage mein aag lag gayi hai Hauz Khas Village ke main road pe. Garage fully jal raha hai but family bahar nikal aayi lagti hai. Flames ab main house ki side wall ko chhoo rahi hain. Aapko tez rehna hoga.",
       "timestamp": "2024-03-15T02:45:00",
-      "caller_phone": "555-0110",
+      "caller_phone": "9811-000110",
       "event_id": "event_010"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "HIGH",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["maple", "3rd"],
+      "location_keywords": ["hauz khas"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -172,50 +172,50 @@
   {
     "call": {
       "call_id": "gc_011",
-      "transcript": "MY HUSBAND ISN'T BREATHING. RIVERSIDE HOSPITAL PARKING LOT. PLEASE HURRY.",
+      "transcript": "MERE PATI BREATHE NAHI KAR RAHE. AIIMS HOSPITAL PARKING LOT. PLEASE JALDI AANA.",
       "timestamp": "2024-03-15T02:50:00",
-      "caller_phone": "555-0111",
+      "caller_phone": "9811-000111",
       "event_id": "event_011"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["riverside", "parking"],
+      "location_keywords": ["aiims", "parking"],
       "is_duplicate_of": null
     },
-    "notes": "Extremely terse — clear critical severity despite minimal words; location and chief complaint unambiguous"
+    "notes": "Extremely terse — location and chief complaint clear despite minimal words"
   },
   {
     "call": {
       "call_id": "gc_012",
-      "transcript": "There's a man collapsed in the parking lot outside Riverside Hospital. I was walking to my car and I found him. He's not breathing and another woman who stopped says she's a nurse and she's doing CPR. Please send an ambulance to the Riverside Hospital parking lot right away.",
+      "transcript": "AIIMS hospital parking lot mein bahar emergency entry ke paas ek aadmi gira hua hai, hosh nahi hai usse. Main gaadi par jaa raha tha aur mila. Ek aurat yahan hai jo bol rahi hai doctor hai aur CPR kar rahi hai. Please ambulance bhejo AIIMS parking ko abhi!",
       "timestamp": "2024-03-15T02:51:30",
-      "caller_phone": "555-0112",
+      "caller_phone": "9811-000112",
       "event_id": "event_011"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["riverside", "parking"],
+      "location_keywords": ["aiims", "parking"],
       "is_duplicate_of": "gc_011"
     },
-    "notes": "Bystander reporting same incident — observational, calmer tone; CPR already in progress confirms same event"
+    "notes": "Bystander reporting same incident — CPR already in progress confirms same event"
   },
   {
     "call": {
       "call_id": "gc_013",
-      "transcript": "My baby is choking! She can't breathe, she's turning blue! We're at the Westside Mall food court, I don't know exactly where but we're right by the Chinese place. She's three years old, she was eating a grape. Please come NOW.",
+      "transcript": "Mere bache ko kuch fas gaya hai gale mein Saket Select Citywalk mall mein! She can't breathe, blue ho rahi hai! Wo teen saal ki hai, angoor kha rahi thi. Please please jaldi aao, hum food court mein hain!",
       "timestamp": "2024-03-15T02:55:00",
-      "caller_phone": "555-0113",
+      "caller_phone": "9811-000113",
       "event_id": "event_013"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["westside mall"],
+      "location_keywords": ["saket"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -223,16 +223,16 @@
   {
     "call": {
       "call_id": "gc_014",
-      "transcript": "I think my roommate overdosed. He's on the floor in the hallway and he's completely unresponsive, barely breathing. I can't wake him up at all. We're at Oak Street Apartments, apartment 4B. I don't know what he took but there are pills scattered around him. Please hurry.",
+      "transcript": "I think my friend overdosed at a party in Hauz Khas Village. He's on the floor, completely unresponsive, barely breathing. Main usse jagane ki koshish kar raha hoon but koi response nahi. I don't know what he took. Please ambulance bhejo immediately.",
       "timestamp": "2024-03-15T03:00:00",
-      "caller_phone": "555-0114",
+      "caller_phone": "9811-000114",
       "event_id": "event_014"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["oak street"],
+      "location_keywords": ["hauz khas"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -240,33 +240,33 @@
   {
     "call": {
       "call_id": "gc_015",
-      "transcript": "My friend took something at the Eastside Community Center, I don't know what it was. She's technically awake but she's really out of it — slurring her words, her eyes keep rolling back. She keeps saying she's fine but she's not fine. She might be getting worse.",
+      "transcript": "Meri colleague Nehru Place pe kuch le aayi, I don't know what it was. Wo technically jaag rahi hai but bahut out of it hai — words blur ho rahe hain, aankhein roll kar rahi hain. Baar baar bol rahi hai theek hoon but theek nahi hai. Shayad aur bura ho jaaye.",
       "timestamp": "2024-03-15T03:05:00",
-      "caller_phone": "555-0115",
+      "caller_phone": "9811-000115",
       "event_id": "event_015"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "HIGH",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["community center"],
+      "location_keywords": ["nehru place"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — patient conscious and denying emergency, but showing signs of deterioration"
+    "notes": "Ambiguous severity — patient conscious and denying emergency but showing decline signs"
   },
   {
     "call": {
       "call_id": "gc_016",
-      "transcript": "My mother fell down the stairs and I cannot wake her up! She is 82 years old and not responding to anything. We were just leaving the senior center at City Hall Plaza. There is blood on the back of her head. She fell from the top of the staircase.",
+      "transcript": "Mere papa India Gate ke paas gir gaye hain aur main unhe utha nahi pa raha. 78 saal ke hain aur koi response nahi de rahe. Hum India Gate dekhne aaye the aur seedhiyon pe gir gaye. Sir ke peeche khoon aa raha hai.",
       "timestamp": "2024-03-15T03:10:00",
-      "caller_phone": "555-0116",
+      "caller_phone": "9811-000116",
       "event_id": "event_016"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["city hall"],
+      "location_keywords": ["india gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -274,33 +274,33 @@
   {
     "call": {
       "call_id": "gc_017",
-      "transcript": "Guy fell off a ladder at the construction site near Memorial Bridge. He's conscious, he's talking to us, and his leg is obviously broken — the bone might be through the skin, hard to look at. His arm might be broken too. He's in a lot of pain but he's alert and stable.",
+      "transcript": "Worker fell off scaffolding near Akshardham Temple construction site. He's conscious, talking to us, but his leg is clearly broken — bone might be through the skin. His arm may also be broken. Bahut dard mein hai but alert aur stable hai.",
       "timestamp": "2024-03-15T03:15:00",
-      "caller_phone": "555-0117",
+      "caller_phone": "9811-000117",
       "event_id": "event_017"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "HIGH",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["memorial bridge"],
+      "location_keywords": ["akshardham"],
       "is_duplicate_of": null
     },
-    "notes": "Non-critical MEDICAL — patient conscious, alert, and stable despite serious orthopedic injuries"
+    "notes": "Non-critical MEDICAL — patient conscious, alert, and stable despite serious injuries"
   },
   {
     "call": {
       "call_id": "gc_018",
-      "transcript": "Something is very wrong with my father. He woke up and one side of his face is completely drooping. He tried to raise his arm and couldn't lift it. He's trying to talk but it's all garbled, I can't understand him. I think he's having a stroke. We're at 5th and Broadway.",
+      "transcript": "Kuch bahut wrong hai mere papa ke saath CP mein! Unka aadha chehra ek taraf latkaa hua hai. Unhone apna haath uthane ki koshish ki aur nahi hua. Bolne ki koshish kar rahe hain but words ulte nikalte hain, main samajh nahi pa raha. Main sochta hoon stroke ho raha hai. Hum Connaught Place pe hain.",
       "timestamp": "2024-03-15T03:20:00",
-      "caller_phone": "555-0118",
+      "caller_phone": "9811-000118",
       "event_id": "event_018"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["5th", "broadway"],
+      "location_keywords": ["connaught", "cp"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -308,16 +308,16 @@
   {
     "call": {
       "call_id": "gc_019",
-      "transcript": "My son got stung by a bee near Riverside Park, right at the park entrance. He's allergic and he used his EpiPen but his throat is still swelling. He's having trouble breathing and his lips look puffy. The Epi bought some time but he needs a hospital right now.",
+      "transcript": "Mere bete ko Lotus Temple gardens ke paas makhhi ne kaata aur uska gala sujan raha hai. Wo allergic hai, humne EpiPen use kiya but tez nahi lag raha. Breathe karne mein takleef ho rahi hai. Hum Lotus Temple ke bahar hain, please jaldi aao.",
       "timestamp": "2024-03-15T03:25:00",
-      "caller_phone": "555-0119",
+      "caller_phone": "9811-000119",
       "event_id": "event_019"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "HIGH",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["riverside park"],
+      "location_keywords": ["lotus temple"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -325,16 +325,16 @@
   {
     "call": {
       "call_id": "gc_020",
-      "transcript": "There's a homeless man passed out by the fountain at Central Park Entrance. I shook his shoulder and he did not respond at all. I can't tell if he's breathing. His lips are a little blue. He might have been out here for a while, I don't know.",
+      "transcript": "Yamuna Bank metro station ke bahar ek aadmi pada hua hai, hosh bilkul nahi hai usse. Maine uska kandha hilaya but koi response nahi. Saans le raha hai ya nahi clear nahi. Hont thode neele lag rahe hain. Kaafi der se wahan pada hai, koi nahi tha toh maine call kiya.",
       "timestamp": "2024-03-15T03:30:00",
-      "caller_phone": "555-0120",
+      "caller_phone": "9811-000120",
       "event_id": "event_020"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["central park"],
+      "location_keywords": ["yamuna bank"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -342,50 +342,50 @@
   {
     "call": {
       "call_id": "gc_021",
-      "transcript": "My coworker is acting really strange at Jefferson High gymnasium, we're using it for a community event. She's confused, she's shaking, sweating a lot. She mentioned diabetes before she started getting bad. She's sitting up and can say a few words but she seems really out of it. I don't know if this is an emergency or if she just needs juice or something.",
+      "transcript": "Meri colleague Red Fort ke paas bahut ajeeb tarah se behave kar rahi hai, hum ek function pe hain. Confused hai, kaamp rahi hai, bahut pasina aa raha hai. Pehle usne bola diabetes hai, phir yeh sab shuru ho gaya. Baithke thodi baatein kar rahi hai but kuch samajh nahi aa raha. Main nahi jaanta yeh emergency hai ya juice pilane se theek ho jaayegi.",
       "timestamp": "2024-03-15T03:35:00",
-      "caller_phone": "555-0121",
+      "caller_phone": "9811-000121",
       "event_id": "event_021"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "MEDIUM",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["jefferson", "high"],
+      "location_keywords": ["red fort", "lal qila"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — possible hypoglycemia, patient responsive; caller uncertain if intervention needed"
+    "notes": "Ambiguous severity — possible hypoglycemia, caller uncertain; patient still responsive"
   },
   {
     "call": {
       "call_id": "gc_022",
-      "transcript": "Oh my god okay so my wife is 38 weeks pregnant and her water broke about twenty minutes ago and her contractions are already two minutes apart, and we were trying to get to the hospital but our car wouldn't start so we walked to the Eastside Community Center because it was close, and now she's saying the baby is coming RIGHT NOW, she's screaming and she says she can feel the head, and I've never done this before, I have absolutely no idea what to do, I'm panicking, she's on the floor in the lobby, the center address is on Eastside Avenue I think, there's a sign out front. Can you please please send someone who knows what they're doing, I'm completely alone here and she says it's happening now. I need you to tell me what to do until they get here.",
+      "transcript": "Oh my god okay sun lo meri wife 38 weeks pregnant hai aur unka paani abhi toot gaya, lagbhag ek ghante pehle, aur contractions already do minute pe aa rahe hain, aur hum Dwarka Sector 21 se hospital jaane ki koshish kar rahe the but gaadi start nahi ho rahi, aur unke bol rahi hain bacha aa raha hai ABHI, woh chilla rahi hain, aur mainne yeh pehle kabhi nahi kiya, main bilkul ghbaar raha hoon, hum Dwarka Sector 21 mein ghar pe hain, please koi bhejo jo jaanta ho kya karna hai, woh bol rahi hain bacha aa raha hai aur mujhe nahi pata kya karna hai please abhi aao...",
       "timestamp": "2024-03-15T03:40:00",
-      "caller_phone": "555-0122",
+      "caller_phone": "9811-000122",
       "event_id": "event_022"
     },
     "expected": {
       "incident_type": "MEDICAL",
       "severity": "HIGH",
       "resources_needed": ["ambulance"],
-      "location_keywords": ["eastside", "community center"],
+      "location_keywords": ["dwarka"],
       "is_duplicate_of": null
     },
-    "notes": "Long rambling call — imminent delivery, panicked first-time father, location confirmed"
+    "notes": "Long rambling call — imminent delivery, panicked first-time father in Dwarka"
   },
   {
     "call": {
       "call_id": "gc_023",
-      "transcript": "Car accident at 4th and Main, two cars collided, one of them ran a red light. There are people hurt — I can see at least two people injured, one woman is bleeding from her head and another passenger is holding his arm. I'm going to see if I can help.",
+      "transcript": "Bahut bura accident hua hai Connaught Place ke paas! Do gaadiyaan takrayi hain inner circle mein, ek ne signal tod diya. Log zakhmi hain — ek aurat ke sir se khoon aa raha hai aur ek aur passenger apna haath pakad raha hai. Main madad karne aa raha hoon.",
       "timestamp": "2024-03-15T03:45:00",
-      "caller_phone": "555-0123",
+      "caller_phone": "9811-000123",
       "event_id": "event_023"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["4th", "main"],
+      "location_keywords": ["connaught place", "cp"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -393,33 +393,33 @@
   {
     "call": {
       "call_id": "gc_024",
-      "transcript": "Bad crash at Main and 4th Street — looks like two cars hit each other hard, one ran a light I think. I can see at least one person who looks injured, slumped over in the driver's seat. Other car's airbags went off.",
+      "transcript": "Accident near Rajiv Chowk, CP pe, do gaadiyaan ek doosre se takrayi hain — ek ne light tod di lagta hai. Main dekh sakta hoon at least ek aadmi zakhmi hai, driver seat pe jhukte hua. Doosri gaadi ke airbags bhi chhoot gaye hain.",
       "timestamp": "2024-03-15T03:46:10",
-      "caller_phone": "555-0124",
+      "caller_phone": "9811-000124",
       "event_id": "event_023"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["main", "4th"],
+      "location_keywords": ["rajiv chowk", "cp"],
       "is_duplicate_of": "gc_023"
     },
-    "notes": "Different witness, different vantage point — slightly fewer injuries visible from their angle"
+    "notes": "Different witness, slightly fewer injuries visible from their angle"
   },
   {
     "call": {
       "call_id": "gc_025",
-      "transcript": "A car just hit a pedestrian at Memorial Bridge! The person flew about fifteen feet and they are NOT moving. The car stopped. There is blood on the road. The pedestrian is completely still and unresponsive. Please hurry, I don't think this person is breathing!",
+      "transcript": "Ek car ne pedestrian ko maara India Gate ke paas! Woh banda karib pandrah foot hawa mein uchhala aur bilkul nahi hil raha! Car ruk gayi. Zameen pe khoon hai. Woh bilkul still aur unresponsive hai. Please jaldi aao, mujhe nahi lagta woh breathe kar raha hai!",
       "timestamp": "2024-03-15T03:50:00",
-      "caller_phone": "555-0125",
+      "caller_phone": "9811-000125",
       "event_id": "event_025"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["memorial bridge"],
+      "location_keywords": ["india gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -427,16 +427,16 @@
   {
     "call": {
       "call_id": "gc_026",
-      "transcript": "Hi, um, there's been a minor car accident near Union Station. Two cars bumped into each other in the side street. Both drivers are out and walking around and nobody seems to be hurt. Just a lot of bumper damage. Can you send someone for the police report?",
+      "transcript": "Hello, ek minor accident hua hai New Delhi Railway Station ke paas, side exit wali gali mein. Do gaadiyaan thodi si takrayi hain. Dono drivers bahar hain aur chal phir rahe hain, koi seriously hurt nahi lagta. Bas police report ke liye koi chahiye.",
       "timestamp": "2024-03-15T03:55:00",
-      "caller_phone": "555-0126",
+      "caller_phone": "9811-000126",
       "event_id": "event_026"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "LOW",
       "resources_needed": ["police_car"],
-      "location_keywords": ["union station"],
+      "location_keywords": ["new delhi station", "ndls"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -444,16 +444,16 @@
   {
     "call": {
       "call_id": "gc_027",
-      "transcript": "Motorcyclist down on Highway 9 near mile marker 12. He skidded out, he's on the ground. His helmet is cracked. He's conscious and he's yelling but his leg looks very bad, probably a compound fracture. He cannot get up. Bike is still running in the road.",
+      "transcript": "Scooty accident hai airport expressway pe near IGI Airport! Banda skid karke gir gaya. Helmet crack ho gayi hai. Woh hosh mein hai aur chilla raha hai but uski taang bahut buri tarah tooti hui lag rahi hai, shayad compound fracture. Uthh nahi pa raha. Scooty abhi bhi road pe padi hai.",
       "timestamp": "2024-03-15T04:00:00",
-      "caller_phone": "555-0127",
+      "caller_phone": "9811-000127",
       "event_id": "event_027"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["highway 9"],
+      "location_keywords": ["airport", "expressway"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -461,16 +461,16 @@
   {
     "call": {
       "call_id": "gc_028",
-      "transcript": "A child on a bicycle just got hit by a car at 5th and Broadway! The kid is maybe eight years old, he's crying and has road rash all up his arms. The driver pulled over. The kid wasn't wearing a helmet and his head might have hit the pavement. He seems conscious but confused.",
+      "transcript": "Ek baccha cycle pe tha near Lajpat Nagar Central Market aur ek gaadi ne use mara! Bacha lagbhag 8-9 saal ka hai, ro raha hai, haatho pe road rash hai. Car driver ruk gaya. Bacche ne helmet nahi pahna tha aur uska sir zameen se lag gaya. Hosh mein hai but confused lag raha hai.",
       "timestamp": "2024-03-15T04:05:00",
-      "caller_phone": "555-0128",
+      "caller_phone": "9811-000128",
       "event_id": "event_028"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["5th", "broadway"],
+      "location_keywords": ["lajpat nagar"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -478,33 +478,33 @@
   {
     "call": {
       "call_id": "gc_029",
-      "transcript": "Oh god there has been a massive pile-up on Highway 9 near mile marker 12, it just happened, like two minutes ago. I counted four or maybe five cars plus a jackknifed semi. There's glass everywhere, steam from engines, and I can see people trapped in at least two of the vehicles. One car is completely on its side. I can hear a child crying from inside one of the cars. There's a woman hanging halfway out of a window, not moving. I'm a registered nurse and I'm going to try to help but I need backup immediately. And listen — there is fuel leaking from the semi, I can smell it, this could turn into a fire. You need to send fire trucks too, not just ambulances. This is a mass casualty situation. Please send everything you have.",
+      "transcript": "Oh god airport expressway pe IGI Airport ke paas ek bahut bada pile-up hua hai, abhi abhi, do minute pehle. Main ne ginye — char ya paanch gaadiyaan, ek bus bhi hai jo jackknife ho gayi. Kaanch bikhra hua hai, engines se steam aa rahi hai, aur main dekh sakta hoon at least do gaadiyaon mein log trapped hain. Ek gaadi poori taraf kar ke palti hai. Ek bacche ki awaaz aa rahi hai ek gaadi se. Ek aurat ek khidki se aadhi bahar latkee hui hai, hil nahi rahi. Main registered nurse hoon aur main madad karne ja raha hoon but mujhe backup chahiye ABHI. Aur sun — bus se petrol leak ho raha hai, smell aa rahi hai — yeh aag mein badal sakta hai. Aap ko fire trucks bhi bhejne honge, sirf ambulance nahi. Yeh mass casualty situation hai. Please jo bhi ho, sab bhejo.",
       "timestamp": "2024-03-15T04:10:00",
-      "caller_phone": "555-0129",
+      "caller_phone": "9811-000129",
       "event_id": "event_029"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance", "fire_truck", "police_car"],
-      "location_keywords": ["highway 9", "mile marker 12"],
+      "location_keywords": ["airport", "expressway"],
       "is_duplicate_of": null
     },
-    "notes": "Long rambling call from medical professional — mass casualty, fuel leak fire risk, child trapped"
+    "notes": "Long call from nurse — mass casualty, fuel leak fire risk, child trapped"
   },
   {
     "call": {
       "call_id": "gc_030",
-      "transcript": "A car just hit someone and drove off! Near Riverside Park, right on the riverside road. The victim is a woman, she's on the ground, she's conscious but her leg is clearly broken and she's screaming in pain. The car was a red sedan, it just kept going toward downtown.",
+      "transcript": "Ek car ne kisi aurat ko maara near Hauz Khas Village aur bhaag gayi! Woh zameen pe hai, hosh mein hai, chilla rahi hai dard mein, uski taang bahut buri tarah tooti hua lag rahi hai. Car red thi, Outer Ring Road ki taraf gayi.",
       "timestamp": "2024-03-15T04:15:00",
-      "caller_phone": "555-0130",
+      "caller_phone": "9811-000130",
       "event_id": "event_030"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["riverside park"],
+      "location_keywords": ["hauz khas"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -512,16 +512,16 @@
   {
     "call": {
       "call_id": "gc_031",
-      "transcript": "Big truck rolled over on the exit ramp near Memorial Bridge. The driver is okay — he climbed out himself — but he's sitting on the ground looking really dazed and confused. Maybe a concussion? The truck is blocking both lanes of the ramp. No other vehicles involved.",
+      "transcript": "Kashmere Gate ISBT ke paas se nikalne wali gali mein ek auto rickshaw palat gaya. Driver road pe baith ke hai, hosh mein hai lekin dazed lag raha hai — shayad concussion. Dono passengers bahar nikal aaye. Ek aurat bahut dard mein hai, apna haath pakad rahi hai.",
       "timestamp": "2024-03-15T04:20:00",
-      "caller_phone": "555-0131",
+      "caller_phone": "9811-000131",
       "event_id": "event_031"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
-      "resources_needed": ["ambulance", "police_car", "fire_truck"],
-      "location_keywords": ["memorial bridge"],
+      "resources_needed": ["ambulance", "police_car"],
+      "location_keywords": ["kashmere gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -529,50 +529,50 @@
   {
     "call": {
       "call_id": "gc_032",
-      "transcript": "A car just drove through a storefront window! I think it's on Old Town Square... actually it might be on 5th Avenue, they're right next to each other. There is a person pinned between the car and the counter inside, they are screaming. Several people are inside the store. You need fire and ambulance.",
+      "transcript": "Ek gaadi ek dukaan mein ghus gayi hai! Main sochta hoon Karol Bagh main market mein hai... actually Ajmal Khan Road ho sakta hai, ekdum paas mein hain. Ek banda gaadi aur counter ke beech mein phansa hua hai, chilla raha hai. Dukaan ke andar kaafi log hain. Please fire aur ambulance bhejo.",
       "timestamp": "2024-03-15T04:25:00",
-      "caller_phone": "555-0132",
+      "caller_phone": "9811-000132",
       "event_id": "event_032"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "HIGH",
       "resources_needed": ["ambulance", "fire_truck", "police_car"],
-      "location_keywords": ["old town", "5th"],
+      "location_keywords": ["karol bagh", "ajmal khan"],
       "is_duplicate_of": null
     },
-    "notes": "Conflicting location — caller gives Old Town Square then second-guesses to 5th Avenue"
+    "notes": "Conflicting address — caller gives Karol Bagh main market then second-guesses to Ajmal Khan Road"
   },
   {
     "call": {
       "call_id": "gc_033",
-      "transcript": "ROBBERY UNION STATION RIGHT NOW. GUY HAS A GUN. HURRY.",
+      "transcript": "CHANDNI CHOWK MEIN ABHI LOOT HO RAHI HAI. CHHURI HAI. POLICE BHEJO ABHI.",
       "timestamp": "2024-03-15T04:30:00",
-      "caller_phone": "555-0133",
+      "caller_phone": "9811-000133",
       "event_id": "event_033"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "HIGH",
       "resources_needed": ["police_car"],
-      "location_keywords": ["union station"],
+      "location_keywords": ["chandni chowk"],
       "is_duplicate_of": null
     },
-    "notes": "Extremely terse — caller likely hiding or whispering; location and threat type clear"
+    "notes": "Extremely terse — caller likely hiding; location and threat type clear"
   },
   {
     "call": {
       "call_id": "gc_034",
-      "transcript": "Someone is beating a man outside the Downtown Parking Garage on 5th! The attacker has a metal pipe and the victim is on the ground and he is not getting up. The attacker is still hitting him. There is blood on the concrete. Please come right now, this man is going to die!",
+      "transcript": "Koi banda maar raha hai ek aadmi ko Hazrat Nizamuddin station ke bahar! Attacker ke haath mein lohe ki rod hai aur victim zameen pe hai, uthh nahi raha. Attacker abhi bhi maar raha hai. Bahut khoon aa raha hai. Please jaldi aao, yeh banda marr jaayega!",
       "timestamp": "2024-03-15T04:35:00",
-      "caller_phone": "555-0134",
+      "caller_phone": "9811-000134",
       "event_id": "event_034"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["parking garage", "5th"],
+      "location_keywords": ["nizamuddin"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -580,16 +580,16 @@
   {
     "call": {
       "call_id": "gc_035",
-      "transcript": "Someone is breaking into my house right now! I can hear them smashing the back window. I'm locked in my bedroom with my two children. We're at the corner of 7th and Elm, the gas station corner house, gray house. I'm terrified, please hurry!",
+      "transcript": "Koi maar ke ghus raha hai mere flat mein Rohini Sector 7 mein! Main khidki ka sheesha tootte ki awaaz sun sakta hoon. Main bedroom mein band hoon apne do bacchon ke saath. Please jaldi aao, mere paas chhote bacche hain!",
       "timestamp": "2024-03-15T04:40:00",
-      "caller_phone": "555-0135",
+      "caller_phone": "9811-000135",
       "event_id": "event_035"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "HIGH",
       "resources_needed": ["police_car"],
-      "location_keywords": ["7th", "elm"],
+      "location_keywords": ["rohini"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -597,50 +597,50 @@
   {
     "call": {
       "call_id": "gc_036",
-      "transcript": "Hi, I want to report something suspicious near Riverside Park. There's a man who's been sitting in a dark car for about two hours just watching the playground. He drives away and comes back. I might be completely overreacting, I don't know. He hasn't done anything that I've seen. Just... it doesn't feel right.",
+      "transcript": "Hello, main kuch suspicious report karna chahta hoon Dwarka metro ke paas. Ek aadmi karib do ghante se ek dark car mein baitha hua playground ko dekh raha hai. Woh jaata hai aur wapas aa jaata hai. Shayad main galat hoon, lekin yeh theek nahi lagta.",
       "timestamp": "2024-03-15T04:45:00",
-      "caller_phone": "555-0136",
+      "caller_phone": "9811-000136",
       "event_id": "event_036"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "LOW",
       "resources_needed": ["police_car"],
-      "location_keywords": ["riverside park"],
+      "location_keywords": ["dwarka"],
       "is_duplicate_of": null
     },
-    "notes": "Ambiguous severity — no confirmed threat or criminal act; caller themselves unsure"
+    "notes": "Ambiguous severity — no confirmed threat; caller themselves uncertain"
   },
   {
     "call": {
       "call_id": "gc_037",
-      "transcript": "My neighbor is in trouble. I can hear her screaming and something breaking — furniture maybe. It went quiet for a minute and I was going to call back but then it started again. She's screaming for help. They're at... I think 6th Street Apartments? No wait, it's Oak Street Apartments, Building B, second floor. Please send someone, I've called before about these two but tonight it sounds really bad.",
+      "transcript": "Meri padosan bahut chikh rahi hai, kuch toot raha hai andar. Phir thodi der ke liye sannata aaya aur main sochne laga call na karoon, phir dobara shuru ho gaya. Ab woh madad ke liye cheekh rahi hai. Woh hain... main sochta hoon Karol Bagh mein... ya Patel Nagar wali taraf, bilkul saath mein hai. Please bhejo, pehle bhi ho chuka hai but aaj bahut bura lag raha hai.",
       "timestamp": "2024-03-15T04:50:00",
-      "caller_phone": "555-0137",
+      "caller_phone": "9811-000137",
       "event_id": "event_037"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["oak street"],
+      "location_keywords": ["karol bagh"],
       "is_duplicate_of": null
     },
-    "notes": "Conflicting address — caller gives wrong building first; prior incident history mentioned"
+    "notes": "Conflicting address — caller gives Karol Bagh then second-guesses; prior incident history"
   },
   {
     "call": {
       "call_id": "gc_038",
-      "transcript": "Shots fired at Westside Mall! I heard at least three or four gunshots near the food court, maybe five minutes ago. People are running and screaming everywhere. I locked myself in a back office of a store. I don't know if anyone has been shot, I can't see. The mall is full of people.",
+      "transcript": "Saket Select Citywalk mall ke main entrance ke paas stabbing hua hai! Log bhaag rahe hain aur chikh rahe hain. Victim zameen pe hai, bahut khoon hai. Attacker mall ke andar bhaag gaya. Please police aur ambulance bhejo abhi!",
       "timestamp": "2024-03-15T04:55:00",
-      "caller_phone": "555-0138",
+      "caller_phone": "9811-000138",
       "event_id": "event_038"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["westside mall"],
+      "location_keywords": ["saket"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -648,16 +648,16 @@
   {
     "call": {
       "call_id": "gc_039",
-      "transcript": "Two men just carjacked me at the gas station on 7th and Elm. One of them had a knife. They pulled me right out of the driver's seat. I'm okay, I wasn't hurt, just really shaken. My kids were NOT in the car, thank god. The car went north on Elm toward the highway.",
+      "transcript": "Meri gaadi chheen li Nehru Place ke paas! Do aadmi the, ek ke paas chhuri thi. Unhone mujhe driver seat se kheencha. Main theek hoon but please unhe pakdo — Outer Ring Road ki taraf nikle hain.",
       "timestamp": "2024-03-15T05:00:00",
-      "caller_phone": "555-0139",
+      "caller_phone": "9811-000139",
       "event_id": "event_039"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "HIGH",
       "resources_needed": ["police_car"],
-      "location_keywords": ["7th", "elm"],
+      "location_keywords": ["nehru place"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -665,16 +665,16 @@
   {
     "call": {
       "call_id": "gc_040",
-      "transcript": "Man has been stabbed at City Hall Plaza! He's on the ground, holding his stomach, there's a lot of blood. The person who did it ran toward Old Town. The victim is conscious, he's talking, but he's losing blood fast. Hurry please.",
+      "transcript": "CP mein ek banda stab hua hai! Woh zameen pe inner circle ke paas hai, apna pet pakde hua hai, bahut khoon aa raha hai. Jo kiya woh Palika Bazaar ki taraf bhaag gaya. Victim hosh mein hai but bahut tezi se khoon kho raha hai. Jaldi please.",
       "timestamp": "2024-03-15T05:05:00",
-      "caller_phone": "555-0140",
+      "caller_phone": "9811-000140",
       "event_id": "event_040"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["city hall"],
+      "location_keywords": ["cp", "connaught"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -682,16 +682,16 @@
   {
     "call": {
       "call_id": "gc_041",
-      "transcript": "There's a strong gas smell coming from the basement of Oak Street Apartments. I mean really strong — the whole hallway reeks, not just a whiff. We've evacuated our floor but I have no idea about the other floors. Someone might still be in the building. Please bring hazmat, this is not a small leak.",
+      "transcript": "Chandni Chowk ke paas ek imarat mein LPG cylinder blast ho sakta hai — gas ki bahut tez smell aa rahi hai puri building mein! Hum log bahar nikal rahe hain lekin main nahi jaanta andar kaun hai abhi. Please fire brigade aur hazmat bhejo, yeh sirf chhoti si smell nahi hai!",
       "timestamp": "2024-03-15T05:10:00",
-      "caller_phone": "555-0141",
+      "caller_phone": "9811-000141",
       "event_id": "event_041"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "HIGH",
       "resources_needed": ["fire_truck", "hazmat_unit"],
-      "location_keywords": ["oak street"],
+      "location_keywords": ["chandni chowk"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -699,16 +699,16 @@
   {
     "call": {
       "call_id": "gc_042",
-      "transcript": "A power line came down on Maple Avenue at 3rd Street, probably from the wind. It's on the pavement and it's sparking. The road is blocked — cars stopped on both sides. Nobody is hurt as far as I can tell but people are getting out of their cars to look at it.",
+      "transcript": "Bijli ka taar gir gaya hai Rohini Sector 7 mein, aandhi ki wajah se. Taar zameen pe hai aur sparking kar raha hai. Road block ho gayi hai. Koi zakhmi nahi lagta lekin log bahar aa ke dekh rahe hain.",
       "timestamp": "2024-03-15T05:15:00",
-      "caller_phone": "555-0142",
+      "caller_phone": "9811-000142",
       "event_id": "event_042"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "MEDIUM",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["maple", "3rd"],
+      "location_keywords": ["rohini"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -716,16 +716,16 @@
   {
     "call": {
       "call_id": "gc_043",
-      "transcript": "Chemical spill at the Industrial District, near the loading docks. A large drum fell off a forklift and it's leaking something yellowish. Workers are coughing and rubbing their eyes. We've moved everyone upwind but there's a visible yellow vapor cloud forming near the dock. We don't know what the chemical is.",
+      "transcript": "Chemical spill hai Kashmere Gate ISBT ke paas, loading area mein. Ek forklift se drum gira aur kuch peela liquid bah raha hai. Workers khansi kar rahe hain aur aankhein jal rahi hain. Hum log hawa ke upar ki taraf aaye hain but ek cloud ban raha hai. Hum nahi jaante kya chemical hai.",
       "timestamp": "2024-03-15T05:20:00",
-      "caller_phone": "555-0143",
+      "caller_phone": "9811-000143",
       "event_id": "event_043"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "HIGH",
       "resources_needed": ["fire_truck", "hazmat_unit"],
-      "location_keywords": ["industrial"],
+      "location_keywords": ["kashmere gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -733,16 +733,16 @@
   {
     "call": {
       "call_id": "gc_044",
-      "transcript": "The underpass at Memorial Bridge is flooding fast. The water is already up to the hood level of the cars down there. A few drivers got out of their cars and are standing on the curb but their cars are basically underwater now. The water is still rising and the road is completely impassable.",
+      "transcript": "Hazrat Nizamuddin underpass mein monsoon ki wajah se bahut paani bhar gaya hai! Gaadiyaan hood level tak doob gayi hain. Drivers bahar nikal gaye hain but gaadiyaan submerged ho rahi hain. Paani aur bhar raha hai, road completely band hai.",
       "timestamp": "2024-03-15T05:25:00",
-      "caller_phone": "555-0144",
+      "caller_phone": "9811-000144",
       "event_id": "event_044"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "MEDIUM",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["memorial bridge"],
+      "location_keywords": ["nizamuddin"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -750,16 +750,16 @@
   {
     "call": {
       "call_id": "gc_045",
-      "transcript": "A large tree fell across the road at the Riverside Park entrance. It's blocking the whole road completely. There are some power lines tangled in the branches but I don't see sparking. Nobody is hurt, nobody is around. The road is just totally blocked.",
+      "transcript": "India Gate ke paas ek bada ped gira hai, poori road block ho gayi hai. Bijli ke taar bhi ped mein uljhe hain lekin spark nahi dikh rahi. Koi zakhmi nahi, koi aas paas nahi tha. Bas road poori taraf se band hai.",
       "timestamp": "2024-03-15T05:30:00",
-      "caller_phone": "555-0145",
+      "caller_phone": "9811-000145",
       "event_id": "event_045"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "LOW",
       "resources_needed": ["fire_truck"],
-      "location_keywords": ["riverside park"],
+      "location_keywords": ["india gate"],
       "is_duplicate_of": null
     },
     "notes": null
@@ -767,33 +767,33 @@
   {
     "call": {
       "call_id": "gc_046",
-      "transcript": "I'm calling about a fire at Oak Street Apartments — I'm a neighbor across the street. I can see smoke pouring out of multiple windows on what looks like the fifth or sixth floor. People are on the fire escape. I can hear alarms going off. This looks really serious.",
+      "transcript": "Main samne wali building se call kar raha hoon — Karol Bagh ke apartment complex mein aag lagi hai! Kaafi floors se smoke aa raha hai. Log fire escape pe hain. Alarms baj rahe hain. Yeh bahut serious lag raha hai, please help bhejo immediately.",
       "timestamp": "2024-03-15T02:09:00",
-      "caller_phone": "555-0146",
+      "caller_phone": "9811-000146",
       "event_id": "event_003"
     },
     "expected": {
       "incident_type": "FIRE",
       "severity": "CRITICAL",
       "resources_needed": ["fire_truck", "ambulance"],
-      "location_keywords": ["oak street", "apartment"],
+      "location_keywords": ["karol bagh", "apartment"],
       "is_duplicate_of": "gc_003"
     },
-    "notes": "Neighbor across the street reporting the same fire — exterior view confirms multiple floors affected"
+    "notes": "Neighbor across the street reporting same Karol Bagh apartment fire — exterior view confirms multiple floors"
   },
   {
     "call": {
       "call_id": "gc_047",
-      "transcript": "I'm the driver — I hit a pedestrian at Memorial Bridge. I didn't see him, he stepped out from between parked cars. I stopped immediately. He's on the ground and he's not moving. I'm right here with him. Oh god please hurry, I don't know what to do, there's a lot of blood.",
+      "transcript": "Main woh driver hoon jisne galti se pedestrian ko maara India Gate ke paas. Main ruk gaya fauran. Woh banda nahi uthh raha, maine pulse check karne ki koshish ki but mujhe pata nahi. Bahut khoon hai. Please jaldi aao, mujhe nahi pata kya karoon.",
       "timestamp": "2024-03-15T03:51:45",
-      "caller_phone": "555-0147",
+      "caller_phone": "9811-000147",
       "event_id": "event_025"
     },
     "expected": {
       "incident_type": "ACCIDENT",
       "severity": "CRITICAL",
       "resources_needed": ["ambulance", "police_car"],
-      "location_keywords": ["memorial bridge"],
+      "location_keywords": ["india gate"],
       "is_duplicate_of": "gc_025"
     },
     "notes": "Driver calling in — confirms same incident from at-fault party's perspective"
@@ -801,50 +801,50 @@
   {
     "call": {
       "call_id": "gc_048",
-      "transcript": "I work at Westside Mall and I'm locked in the back of a clothing store. I heard gunshots near the food court — at least three of them. I can hear people screaming and running in the hallway outside my door. I'm hiding behind a rack of clothes. Is someone already coming? Please tell me someone is coming.",
+      "transcript": "Main Saket Select Citywalk mein ek dukaan mein band hoon. Maine stabbing nahi dekhi but main ne logo ko bhagte dekha aur entrance ke paas zameen pe khoon dikh raha hai. Kya police aa rahi hai? Please mujhe batao kya ho raha hai bahar.",
       "timestamp": "2024-03-15T04:56:30",
-      "caller_phone": "555-0148",
+      "caller_phone": "9811-000148",
       "event_id": "event_038"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["westside mall"],
+      "location_keywords": ["saket", "citywalk"],
       "is_duplicate_of": "gc_038"
     },
-    "notes": "Employee hidden in different part of mall — confirms shots heard, active panic in building"
+    "notes": "Employee locked inside mall — confirms blood visible near entrance, active panic"
   },
   {
     "call": {
       "call_id": "gc_049",
-      "transcript": "This is the building manager at Oak Street Apartments. A tenant just reported a strong gas odor from the basement level. I went down to check and I can confirm it — very strong smell of natural gas in the utility corridor. I am evacuating the building now. We need gas company and fire department immediately.",
+      "transcript": "Main building manager hoon, Chandni Chowk ke paas wale flats ka. Ek resident ne report kiya gas smell aa rahi hai. Main basement mein gaya check karne — confirm kar raha hoon, utility corridor mein bahut tez natural gas ki smell hai. Main abhi evacuation shuru kar raha hoon. Fire brigade aur gas company dono ko bhejo immediately.",
       "timestamp": "2024-03-15T05:11:45",
-      "caller_phone": "555-0149",
+      "caller_phone": "9811-000149",
       "event_id": "event_041"
     },
     "expected": {
       "incident_type": "HAZARD",
       "severity": "HIGH",
       "resources_needed": ["fire_truck", "hazmat_unit"],
-      "location_keywords": ["oak street"],
+      "location_keywords": ["chandni chowk"],
       "is_duplicate_of": "gc_041"
     },
-    "notes": "Building manager confirms same gas leak — professional caller, initiating evacuation"
+    "notes": "Building manager confirming same gas leak — professional caller, initiating evacuation"
   },
   {
     "call": {
       "call_id": "gc_050",
-      "transcript": "There's a man being attacked outside the parking garage on 5th Avenue. The attacker ran when I shouted but the victim is still on the ground. He's conscious but he's bleeding from his head and he can't get up. I think the attacker used something, not his fists. Please send police and an ambulance.",
+      "transcript": "There's an injured man near Hazrat Nizamuddin station. Attacker bhaag gaya jab maine awaaz lagayi. Victim zameen pe pada hai, sir se khoon aa raha hai, hosh mein hai but uthh nahi pa raha. Please police aur ambulance Nizamuddin bhejo.",
       "timestamp": "2024-03-15T04:36:20",
-      "caller_phone": "555-0150",
+      "caller_phone": "9811-000150",
       "event_id": "event_034"
     },
     "expected": {
       "incident_type": "CRIME",
       "severity": "CRITICAL",
       "resources_needed": ["police_car", "ambulance"],
-      "location_keywords": ["parking", "5th"],
+      "location_keywords": ["nizamuddin"],
       "is_duplicate_of": "gc_034"
     },
     "notes": "Bystander who shouted at attacker — attacker fled; caller arrived mid-event"

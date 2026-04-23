@@ -1,4 +1,4 @@
-"""Core 911 call generator — deterministic when seeded."""
+"""Core 112 call generator — deterministic when seeded."""
 
 import random
 from datetime import datetime, timedelta
@@ -37,7 +37,7 @@ _VOWELS = set("aeiouAEIOU")
 
 
 class MockCallGenerator:
-    """Generate realistic, deterministic 911 call transcripts.
+    """Generate realistic, deterministic 112 call transcripts.
 
     Args:
         seed: Optional integer seed.  When provided, the same seed produces
@@ -60,7 +60,7 @@ class MockCallGenerator:
     # ------------------------------------------------------------------
 
     def generate_call(self, template_id: Optional[str] = None) -> MockCall:
-        """Generate a single 911 call.
+        """Generate a single 112 call.
 
         Args:
             template_id: If ``None``, one is chosen from the default distribution.

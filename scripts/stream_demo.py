@@ -1,4 +1,4 @@
-"""Live streaming demo — watch mock 911 calls arrive in real time."""
+"""Live streaming demo — watch mock 112 calls arrive in real time."""
 
 import argparse
 import asyncio
@@ -94,7 +94,7 @@ async def run_stream(stream: CallStream) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Stream mock 911 calls in real time with a live terminal display."
+        description="Stream mock 112 calls in real time with a live terminal display."
     )
     parser.add_argument("--scenario", type=str, default=None, help="Named scenario to replay")
     parser.add_argument("--rate", type=float, default=20.0, help="Calls per minute (live mode)")

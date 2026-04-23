@@ -1,11 +1,11 @@
 # Smart City Dynamic Dispatch Grid
 
-An agentic AI system that ingests 911 call transcripts, triages emergencies, and dispatches civic resources (ambulances, fire trucks, police) — visualised on a live dashboard.
+An agentic AI system that ingests 112 call transcripts, triages emergencies, and dispatches civic resources (ambulances, fire trucks, police) — visualised on a live dashboard.
 
 ## Architecture Overview
 
 ```
-911 transcripts
+112 transcripts
      │
      ▼
 ┌─────────────┐     structured data     ┌──────────────────┐

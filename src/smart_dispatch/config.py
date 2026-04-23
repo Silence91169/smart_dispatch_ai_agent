@@ -36,6 +36,9 @@ class Settings(BaseModel):
     # App
     log_level: str = "INFO"
 
+    # Database
+    db_path: str = "sqlite+aiosqlite:///./dispatch.db"
+
 
 settings = Settings(
     llm_provider=os.getenv("LLM_PROVIDER", "groq"),
@@ -46,6 +49,7 @@ settings = Settings(
     openai_api_key=os.getenv("OPENAI_API_KEY", ""),
     openai_model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
     log_level=os.getenv("LOG_LEVEL", "INFO"),
+    db_path=os.getenv("DB_PATH", "sqlite+aiosqlite:///./dispatch.db"),
 )
 
 logging.basicConfig(

@@ -1,4 +1,4 @@
-"""Core Pydantic models for the 911 call data layer."""
+"""Core Pydantic models for the 112 call data layer."""
 
 from datetime import datetime
 from enum import Enum
@@ -42,7 +42,7 @@ class Location(BaseModel):
 
 
 class MockCall(BaseModel):
-    """A single raw 911 call as it arrives at the system.
+    """A single raw 112 call as it arrives at the system.
 
     Note: ``event_id`` is ground-truth bookkeeping for evaluation only.
     Agents must never read or act on this field — they should derive
