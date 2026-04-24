@@ -103,6 +103,12 @@ export const useSystemStore = create((set, get) => ({
       counters: { ...state.counters, [key]: (state.counters[key] || 0) + n },
     })),
 
+  // ── System error toast ─────────────────────────────────────────────────────
+  systemError: null,  // { message: string, id: number } | null
+  showSystemError: (message) =>
+    set({ systemError: { message, id: Date.now() } }),
+  clearSystemError: () => set({ systemError: null }),
+
   // Per-resource dispatch count (tracked via events since REST doesn't expose it)
   resourceDispatchCounts: {},
   bumpResourceDispatch: (resource_id) =>

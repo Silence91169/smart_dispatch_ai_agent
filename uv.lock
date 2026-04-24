@@ -1897,6 +1897,7 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
+    { name = "httpx" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pytest-mock" },
@@ -1913,6 +1914,7 @@ requires-dist = [
     { name = "geopy" },
     { name = "groq" },
     { name = "httpx" },
+    { name = "httpx", marker = "extra == 'dev'" },
     { name = "langgraph", specifier = ">=0.2" },
     { name = "networkx", specifier = ">=3.2" },
     { name = "numpy", specifier = ">=1.26" },

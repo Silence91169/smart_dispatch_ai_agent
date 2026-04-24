@@ -114,6 +114,10 @@ export function handleWsEvent(event) {
       store.setSimulation({ is_running: true, stats: event.payload })
       break
 
+    case EVENT_TYPES.SYSTEM_ERROR:
+      store.showSystemError(event.payload?.message || 'System error')
+      break
+
     default:
       break
   }

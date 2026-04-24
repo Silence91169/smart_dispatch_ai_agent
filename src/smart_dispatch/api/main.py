@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from smart_dispatch.agents.dispatch.agent import DispatchAgent
 from smart_dispatch.agents.triage.agent import TriageAgent
 from smart_dispatch.api.dependencies import AppState, app_state, get_state
-from smart_dispatch.api.routes import calls, decisions, graph, incidents, resources, simulation, stats
+from smart_dispatch.api.routes import calls, decisions, eval as eval_routes, graph, incidents, resources, simulation, stats
 from smart_dispatch.api.schemas import StartScenarioRequest
 from smart_dispatch.api.simulation import SimulationRunner
 from smart_dispatch.api.websocket.routes import router as ws_router
@@ -95,6 +95,8 @@ def create_app() -> FastAPI:
     app.include_router(graph.router, prefix="/api/v1")
     app.include_router(stats.router, prefix="/api/v1")
     app.include_router(simulation.router, prefix="/api/v1")
+    app.include_router(eval_routes.router, prefix="/api/v1")
+    app.include_router(eval_routes.router)  # also at /eval/golden (no prefix)
 
     # ── Short-path aliases (no prefix) ─────────────────────────────────────
     # These mirror the exact paths the demo/smoke-test uses.

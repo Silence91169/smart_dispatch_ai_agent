@@ -35,6 +35,7 @@ dev = [
     "pytest-asyncio",
     "pytest-mock",
     "ruff",
+    "httpx",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -43,7 +44,11 @@ packages = ["src/smart_dispatch"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
+markers = [
+    "integration: marks tests that require real LLM API keys (deselect with -m 'not integration')",
+    "slow: marks tests that load embedding models and run slowly",
+]
 
 [tool.ruff]
 line-length = 100

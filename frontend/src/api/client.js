@@ -41,4 +41,7 @@ export const api = {
 
   resetSimulation: () =>
     request('/simulation/reset', { method: 'POST', body: '{}' }),
+
+  runEval: (limit = 10) =>
+    request(`/eval/golden?limit=${limit}`, { method: 'POST', body: '{}' }),
 }

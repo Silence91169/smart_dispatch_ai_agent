@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useLiveConnection } from '../../hooks/useLiveConnection'
 import StatsBar from '../stats/StatsBar'
 import CityMap from '../map/CityMap'
@@ -6,12 +7,31 @@ import DecisionInspector from '../decisions/DecisionInspector'
 import ResourcePanel from '../resources/ResourcePanel'
 import ScenarioControls from '../controls/ScenarioControls'
 import ManualCallInput from '../controls/ManualCallInput'
+import SystemErrorToast from './SystemErrorToast'
+import { api } from '../../api/client'
+
+const CRITICAL_TRANSCRIPT = 'bhai fire at CP, 3 log phase hai andar, log phanse hain'
+const MEDIUM_TRANSCRIPT = 'accident at Saket, 2 cars crashed, one person has back pain'
 
 export default function Dashboard() {
   useLiveConnection()
 
+  useEffect(() => {
+    function handleKey(e) {
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return
+      if (e.key === 'c' || e.key === 'C') {
+        api.ingestCall(CRITICAL_TRANSCRIPT).catch(() => {})
+      } else if (e.key === 'm' || e.key === 'M') {
+        api.ingestCall(MEDIUM_TRANSCRIPT).catch(() => {})
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [])
+
   return (
     <div className="h-full flex flex-col bg-slate-950 overflow-hidden">
+      <SystemErrorToast />
       {/* Row 1: Stats bar */}
       <StatsBar />
 

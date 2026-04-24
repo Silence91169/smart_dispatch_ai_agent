@@ -4,11 +4,13 @@
 import sys
 from pathlib import Path
 
-# Ensure src/ is on the path when running the script directly (editable installs
-# should already handle this, but this guards against broken .pth files).
-_src = Path(__file__).parents[1] / "src"
-if str(_src) not in sys.path:
-    sys.path.insert(0, str(_src))
+# Ensure src/ and project root are on the path.
+# Root is needed so `evaluation/` (Phase 8 eval module) is importable.
+_root = Path(__file__).parents[1]
+_src = _root / "src"
+for _p in (_src, _root):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
 import uvicorn
 
