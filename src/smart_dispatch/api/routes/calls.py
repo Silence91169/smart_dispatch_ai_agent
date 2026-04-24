@@ -8,6 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from smart_dispatch.api.dependencies import AppState, get_state
 from smart_dispatch.api.schemas import CallResultResponse, SingleCallRequest
 from smart_dispatch.data.schemas import MockCall
+from smart_dispatch.orchestration.event_bus import Event, EventType
 
 router = APIRouter(prefix="/calls", tags=["calls"])
 
@@ -24,6 +25,13 @@ async def process_single_call(
         timestamp=datetime.utcnow(),
         scenario_tag="manual",
     )
+    # Publish call_received so the frontend feed picks up manual calls too
+    if state.event_bus:
+        await state.event_bus.publish(Event(
+            type=EventType.CALL_RECEIVED,
+            call_id=call_id,
+            payload={"transcript": body.transcript, "scenario_tag": "manual"},
+        ))
     try:
         result = await state.orchestrator.run(call)
     except Exception as exc:

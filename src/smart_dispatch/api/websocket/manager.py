@@ -16,6 +16,7 @@ class ConnectionManager:
     def __init__(self) -> None:
         self._connections: list[WebSocket] = []
         self._lock = asyncio.Lock()
+        self._subscribed = False
 
     async def connect(self, ws: WebSocket, event_bus: EventBus, history_limit: int = 100) -> None:
         await ws.accept()
@@ -26,13 +27,22 @@ class ConnectionManager:
         for event in event_bus.history(limit=history_limit):
             await self._send_one(ws, event)
 
-        await event_bus.subscribe(self._broadcast)
+        # Subscribe once — EventBus deduplicates, but we track it so we never
+        # unsubscribe while other connections are still alive (React StrictMode
+        # causes a brief double-connect/disconnect cycle in dev).
+        if not self._subscribed:
+            await event_bus.subscribe(self._broadcast)
+            self._subscribed = True
 
     async def disconnect(self, ws: WebSocket, event_bus: EventBus) -> None:
         async with self._lock:
             if ws in self._connections:
                 self._connections.remove(ws)
-        await event_bus.unsubscribe(self._broadcast)
+            remaining = len(self._connections)
+        # Only unsubscribe when the last connection leaves.
+        if remaining == 0 and self._subscribed:
+            await event_bus.unsubscribe(self._broadcast)
+            self._subscribed = False
 
     async def _broadcast(self, event: Event) -> None:
         dead: list[WebSocket] = []
