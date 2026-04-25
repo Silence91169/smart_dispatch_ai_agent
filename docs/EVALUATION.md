@@ -116,3 +116,52 @@ LLM outputs are stochastic. Running the same eval twice may yield slightly diffe
 3. Set `temperature=0` in the LLM config (Groq/OpenAI support this; current default is provider default)
 
 The `per_case` field in the API response shows which cases failed, enabling targeted prompt iteration.
+
+
+
+
+
+┌──────┬─────────────────────────────┬───────────────┐                                                                                                                                                             
+  │ Node │            Place            │     Type      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N01  │ Connaught Place             │ Commercial    │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤                                                                                                                                                             
+  │ N02  │ India Gate                  │ Heritage      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤                                                                                                                                                             
+  │ N03  │ AIIMS Hospital              │ Hospital      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N04  │ Safdarjung Hospital         │ Hospital      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N05  │ Karol Bagh Market           │ Market        │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N06  │ Chandni Chowk               │ Market        │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N07  │ Red Fort                    │ Heritage      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N08  │ New Delhi Railway Station   │ Transport hub │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N09  │ Hazrat Nizamuddin           │ Transport hub │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N10  │ IGI Airport Terminal 3      │ Transport hub │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N11  │ Dwarka Sector 21            │ Residential   │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N12  │ Rohini Sector 7             │ Residential   │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N13  │ Saket Select Citywalk       │ Commercial    │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N14  │ Lajpat Nagar Central Market │ Market        │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N15  │ Nehru Place                 │ Commercial    │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N16  │ Hauz Khas Village           │ Commercial    │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N17  │ Lotus Temple                │ Heritage      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N18  │ Akshardham Temple           │ Heritage      │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤
+  │ N19  │ Yamuna Bank Metro Station   │ Transport hub │                                                                                                                                                             
+  ├──────┼─────────────────────────────┼───────────────┤    
+  │ N20  │ Kashmere Gate ISBT          │ Transport hub │                                                                                                                                                             
+  └──────┴─────────────────────────────┴───────────────┘
+                                               

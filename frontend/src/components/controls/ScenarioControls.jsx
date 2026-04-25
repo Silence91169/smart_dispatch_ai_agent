@@ -8,6 +8,7 @@ export default function ScenarioControls() {
   const simulation = useSystemStore((s) => s.simulation)
   const setSimulation = useSystemStore((s) => s.setSimulation)
   const setResources = useSystemStore((s) => s.setResources)
+  const resetAll = useSystemStore((s) => s.resetAll)
 
   const [scenario, setScenario] = useState('earthquake_chaos')
   const [speed, setSpeed] = useState(10)
@@ -47,9 +48,9 @@ export default function ScenarioControls() {
     setError(null)
     try {
       await api.resetSimulation()
+      resetAll()
       const resources = await api.getResources()
       setResources(resources)
-      setSimulation({ is_running: false, stats: {} })
     } catch (e) {
       setError(e.message)
     } finally {

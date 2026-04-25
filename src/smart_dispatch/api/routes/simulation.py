@@ -109,4 +109,6 @@ async def reset_simulation(state: AppState = Depends(get_state)) -> dict:
     await state.db.reset_db()
     await seed_resources(state.db)
     state.dispatch_decisions.clear()
+    if state.triage_agent is not None:
+        state.triage_agent.deduplicator.reset()
     return {"status": "reset", "message": "DB wiped and fleet re-seeded."}

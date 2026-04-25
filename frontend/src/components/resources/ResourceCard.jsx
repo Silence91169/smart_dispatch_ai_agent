@@ -14,6 +14,10 @@ const STATUS_LABEL = {
 export default function ResourceCard({ resource }) {
   const activeRoute = useSystemStore((s) => s.activeRoutes[resource.id])
   const dispatchCount = useSystemStore((s) => s.resourceDispatchCounts[resource.id] || 0)
+  const nodeById = useSystemStore((s) => s.nodeById)
+
+  const destNode = activeRoute?.to_node_id ? nodeById[activeRoute.to_node_id] : null
+  const destName = destNode?.name || activeRoute?.to_node_id || null
 
   const color = RESOURCE_STATUS_COLORS[resource.status] || '#64748b'
   const emoji = TYPE_EMOJI[resource.resource_type] || '🚐'
@@ -45,6 +49,10 @@ export default function ResourceCard({ resource }) {
           <span className="text-[9px] text-orange-400">↺</span>
         )}
       </div>
+
+      {destName && (
+        <div className="text-[10px] text-sky-400 truncate">→ {destName}</div>
+      )}
 
       {progress !== null && (
         <div className="h-1 bg-slate-700 rounded-full overflow-hidden">

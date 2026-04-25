@@ -75,6 +75,8 @@ export default function VehicleMarker({ resource }) {
 
   const icon = buildVehicleIcon(resource.resource_type, resource.status)
   const etaMin = route ? (route.etaSec / 60).toFixed(1) : null
+  const destNode = route?.to_node_id ? nodeById[route.to_node_id] : null
+  const destName = destNode?.name || route?.to_node_id || null
 
   return (
     <Marker position={position} icon={icon} zIndexOffset={route ? 500 : 0}>
@@ -82,6 +84,7 @@ export default function VehicleMarker({ resource }) {
         <div style={{ background: '#0f172a', color: '#e2e8f0', borderRadius: 4, padding: '4px 8px', fontSize: 12 }}>
           <div style={{ fontWeight: 700 }}>{resource.call_sign}</div>
           <div style={{ opacity: 0.75 }}>{resource.status}</div>
+          {destName && <div style={{ color: '#38bdf8' }}>→ {destName}</div>}
           {etaMin && <div style={{ color: '#f59e0b' }}>ETA {etaMin} min</div>}
           {route?.was_reassigned_from && (
             <div style={{ color: '#fb923c', fontWeight: 700 }}>↺ Re-routed</div>

@@ -161,6 +161,13 @@ class IncidentDeduplicator:
                 self._index.add(vecs)
         return pruned
 
+    def reset(self) -> None:
+        """Clear all in-memory records and the FAISS index."""
+        self._records = []
+        if self._index is not None:
+            import faiss
+            self._index = faiss.IndexFlatIP(self._dim)
+
     def stats(self) -> dict:
         return {
             "total_incidents": len(self._records),

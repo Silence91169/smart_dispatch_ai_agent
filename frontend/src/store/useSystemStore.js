@@ -119,6 +119,28 @@ export const useSystemStore = create((set, get) => ({
       },
     })),
 
+  // ── Full reset ─────────────────────────────────────────────────────────────
+  resetAll: () =>
+    set({
+      incidents: {},
+      resources: {},
+      feed: [],
+      decisions: [],
+      activeRoutes: {},
+      stats: null,
+      simulation: { is_running: false, stats: {} },
+      selectedIncidentId: null,
+      resourceDispatchCounts: {},
+      counters: {
+        totalCalls: 0,
+        totalDuplicates: 0,
+        totalIncidents: 0,
+        totalDispatches: 0,
+        totalReassignments: 0,
+        unfulfilledCount: 0,
+      },
+    }),
+
   // ── Build node index from graph ────────────────────────────────────────────
   // Backend returns nodes with `id` field (e.g. "N01"), not `node_id`.
   buildNodeIndex: () => {
