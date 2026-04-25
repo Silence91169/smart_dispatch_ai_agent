@@ -16,7 +16,8 @@ class SentenceTransformerProvider(EmbeddingProvider):
     compatible with FAISS IndexFlatIP out of the box.
     """
 
-    DEFAULT_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # DEFAULT_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
     def __init__(self, model_name: str = DEFAULT_MODEL) -> None:
         super().__init__(model_name)
