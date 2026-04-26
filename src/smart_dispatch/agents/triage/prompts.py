@@ -34,22 +34,27 @@ You MUST extract:
    - hazmat_unit ONLY for chemical spills, gas leaks, or unknown hazardous materials
    - Include multiple when needed (e.g., serious fire → fire_truck + ambulance)
 
-4. **location_text** — the location as described, cleaned up. Preserve Delhi place names like "CP", "AIIMS", "Chandni Chowk", "Karol Bagh". Do NOT translate Hindi place names to English. If caller says "rajiv chowk", keep it as "rajiv chowk".
+4. **locations** — a list of ALL distinct locations mentioned in the transcript. Each entry has:
+   - **location_text**: the location as described, cleaned up. Preserve Delhi place names like "CP", "AIIMS", "Chandni Chowk", "Karol Bagh". Do NOT translate Hindi place names to English.
+   - **location_landmark**: any nearby landmark or cross-street for that specific location (e.g., "near Select Citywalk Mall"). Null if none mentioned.
 
-5. **location_landmark** — any nearby landmark or cross-street mentioned (e.g., "near Select Citywalk Mall", "opposite Metro station"). Null if none mentioned.
+   IMPORTANT location rules:
+   - If the caller mentions ONE location, the list has exactly ONE entry.
+   - If the caller mentions MULTIPLE locations for the SAME incident (e.g., "fire at IGI and CP", "accident near Red Fort and Kashmere Gate"), create a SEPARATE entry for EACH location — the same incident must be dispatched to all of them.
+   - Only include locations that are clearly named. NEVER invent or guess locations not mentioned.
+   - Connectors like "and", "aur", "ke paas", "near" between two place names signal multiple locations.
 
-6. **summary** — one concise sentence describing what happened. In English.
+5. **summary** — one concise sentence describing what happened, covering all affected locations. In English.
 
-7. **reasoning** — brief explanation for your severity and resource choices. 1-2 sentences.
+6. **reasoning** — brief explanation for your severity, resource choices, and number of locations identified. 1-2 sentences.
 
-8. **confidence** — your overall confidence in the extraction, 0.0 to 1.0. Lower if the transcript is ambiguous, contradictory, or too vague to be sure.
+7. **confidence** — your overall confidence in the extraction, 0.0 to 1.0. Lower if the transcript is ambiguous, contradictory, or too vague to be sure.
 
 Rules:
 - If the caller is panicked and information is incomplete, make your best inference but lower the confidence.
-- If the transcript mentions multiple issues, identify the PRIMARY emergency and note others in reasoning.
 - When in doubt about severity between two levels, pick the higher one — better to over-respond.
-- NEVER invent locations not mentioned in the transcript.
 - For Hinglish, translate meaning but preserve location names.
+- The same incident_type, severity, and resources_needed apply to ALL locations in the list.
 
 Respond ONLY with the structured output matching the schema. No preamble, no disclaimers."""
 

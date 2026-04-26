@@ -19,11 +19,16 @@ from .deduplicator import IncidentDeduplicator
 from .location_resolver import LocationResolver
 from .preprocessor import TranscriptPreprocessor
 from .prompts import DEFAULT_PROMPT_VERSION, PROMPT_VERSIONS
-from .schemas import LLMTriageExtraction, TriageResult
+from .schemas import LLMTriageExtraction, LocationEntry, TriageResult
 
 
 class TriageAgent(BaseAgent):
-    """Processes raw 112 calls → structured TriageResults with deduplication."""
+    """Processes raw 112 calls → list of TriageResults (one per resolved location).
+
+    Single-location calls produce a list of one — behaviour is identical to before.
+    Multi-location calls (e.g. "fire at IGI and CP") fan out into N independent
+    TriageResults, each with its own incident_id and dedup check.
+    """
 
     def __init__(
         self,
@@ -58,39 +63,71 @@ class TriageAgent(BaseAgent):
             f"dim={self.embedder.dimension} | llm={self.llm.provider_name}:{self.llm.model}"
         )
 
-    async def process(self, call: MockCall) -> TriageResult:
-        """Main entrypoint: MockCall → TriageResult."""
+    async def process(self, call: MockCall) -> list[TriageResult]:
+        """Main entrypoint: MockCall → list[TriageResult] (one per distinct location).
+
+        For single-location calls the list always has exactly one element, so
+        all existing callers that do `results[0]` or iterate work unchanged.
+        """
         start = time.perf_counter()
         self._call_count += 1
 
         # Step 1: preprocess
         clean_transcript = self.preprocessor.clean(call.transcript)
 
-        # Step 2: LLM extraction
+        # Step 2: LLM extraction — now returns a locations list
         extraction: LLMTriageExtraction = await self.llm.structured_output(
             prompt=f"112 call transcript:\n\n{clean_transcript}",
             schema=LLMTriageExtraction,
             system=self.system_prompt,
             temperature=0.1,
-            max_tokens=800,
-        )
-
-        # Step 3: location resolution
-        node_id, loc_confidence = await self.location_resolver.resolve(
-            raw_text=extraction.location_text,
-            landmark=extraction.location_landmark,
-        )
-
-        # Step 4: deduplication
-        dup_match = await self.deduplicator.check_duplicate(
-            incident_type=extraction.incident_type,
-            summary=extraction.summary,
-            location_text=extraction.location_text,
-            node_id=node_id,
-            timestamp=call.timestamp,
+            max_tokens=1000,
         )
 
         elapsed_ms = (time.perf_counter() - start) * 1000
+        results: list[TriageResult] = []
+
+        # Step 3–4: resolve + dedup once per location (fan-out)
+        for idx, loc_entry in enumerate(extraction.locations):
+            result = await self._process_location(
+                call=call,
+                extraction=extraction,
+                loc_entry=loc_entry,
+                location_index=idx,
+                elapsed_ms=elapsed_ms,
+            )
+            results.append(result)
+
+        self.logger.info(
+            f"Triaged {call.call_id} → {extraction.incident_type.value}/{extraction.severity.value} "
+            f"| locations={len(results)} | {elapsed_ms:.0f}ms"
+        )
+        return results
+
+    async def _process_location(
+        self,
+        call: MockCall,
+        extraction: LLMTriageExtraction,
+        loc_entry: LocationEntry,
+        location_index: int,
+        elapsed_ms: float,
+    ) -> TriageResult:
+        """Resolve one location entry and run dedup — returns a single TriageResult."""
+
+        # Step 3: location resolution
+        node_id, loc_confidence = await self.location_resolver.resolve(
+            raw_text=loc_entry.location_text,
+            landmark=loc_entry.location_landmark,
+        )
+
+        # Step 4: deduplication (independent per location)
+        dup_match = await self.deduplicator.check_duplicate(
+            incident_type=extraction.incident_type,
+            summary=extraction.summary,
+            location_text=loc_entry.location_text,
+            node_id=node_id,
+            timestamp=call.timestamp,
+        )
 
         if dup_match is not None:
             matched_record, similarity = dup_match
@@ -104,10 +141,11 @@ class TriageAgent(BaseAgent):
                 incident_type=extraction.incident_type,
                 severity=extraction.severity,
                 resources_needed=extraction.resources_needed,
-                location_raw=extraction.location_text,
-                location_landmark=extraction.location_landmark,
+                location_raw=loc_entry.location_text,
+                location_landmark=loc_entry.location_landmark,
                 location_node_id=node_id,
                 location_confidence=loc_confidence,
+                location_index=location_index,
                 summary=extraction.summary,
                 reasoning=extraction.reasoning,
                 llm_confidence=extraction.confidence,
@@ -126,7 +164,7 @@ class TriageAgent(BaseAgent):
                 call_id=call.call_id,
                 incident_type=extraction.incident_type,
                 summary=extraction.summary,
-                location_text=extraction.location_text,
+                location_text=loc_entry.location_text,
                 node_id=node_id,
                 timestamp=call.timestamp,
             )
@@ -136,10 +174,11 @@ class TriageAgent(BaseAgent):
                 incident_type=extraction.incident_type,
                 severity=extraction.severity,
                 resources_needed=extraction.resources_needed,
-                location_raw=extraction.location_text,
-                location_landmark=extraction.location_landmark,
+                location_raw=loc_entry.location_text,
+                location_landmark=loc_entry.location_landmark,
                 location_node_id=node_id,
                 location_confidence=loc_confidence,
+                location_index=location_index,
                 summary=extraction.summary,
                 reasoning=extraction.reasoning,
                 llm_confidence=extraction.confidence,
@@ -151,9 +190,8 @@ class TriageAgent(BaseAgent):
             )
 
         self.logger.info(
-            f"Triaged {call.call_id} → {result.incident_type.value}/{result.severity.value} "
-            f"@ {node_id or 'UNRESOLVED'} | dup={result.is_duplicate} "
-            f"| {result.processing_time_ms:.0f}ms"
+            f"  └─ location[{location_index}] {loc_entry.location_text!r} "
+            f"→ {node_id or 'UNRESOLVED'} | dup={result.is_duplicate}"
         )
         return result
 

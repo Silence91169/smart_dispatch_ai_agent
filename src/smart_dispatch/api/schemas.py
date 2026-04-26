@@ -61,8 +61,10 @@ class SingleCallRequest(BaseModel):
 
 class CallResultResponse(BaseModel):
     call_id: str
-    triage: Optional[dict] = None
-    dispatch: Optional[dict] = None
+    # One entry per distinct location extracted from the transcript.
+    # Single-location calls always produce a list of one element.
+    triage_results: list[dict] = []
+    dispatch_decisions: list[Optional[dict]] = []
     skipped: bool = False
     skip_reason: Optional[str] = None
     latency_ms: Optional[float] = None

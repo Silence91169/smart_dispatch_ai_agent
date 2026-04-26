@@ -37,13 +37,16 @@ async def process_single_call(
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    triage = result.get("triage_result")
-    dispatch = result.get("dispatch_decision")
+    triage_results = result.get("triage_results", [])
+    dispatch_decisions = result.get("dispatch_decisions", [])
 
     return CallResultResponse(
         call_id=call_id,
-        triage=triage.model_dump(mode="json") if triage else None,
-        dispatch=dispatch.model_dump(mode="json") if dispatch else None,
+        triage_results=[t.model_dump(mode="json") for t in triage_results],
+        dispatch_decisions=[
+            d.model_dump(mode="json") if d is not None else None
+            for d in dispatch_decisions
+        ],
         skipped=result.get("dispatch_skipped", False),
         skip_reason=result.get("dispatch_skip_reason"),
         latency_ms=result.get("total_latency_ms"),

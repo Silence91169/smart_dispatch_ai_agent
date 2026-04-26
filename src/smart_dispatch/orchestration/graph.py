@@ -60,7 +60,8 @@ class DispatchOrchestrator:
             payload={"transcript_preview": call.transcript[:120]},
         ))
         try:
-            result = await self.triage_agent.process(call)
+            # Returns list[TriageResult] — one per distinct location in the transcript.
+            results = await self.triage_agent.process(call)
         except Exception as exc:
             logger.exception("Triage failed for %s", call.call_id)
             await self.event_bus.publish(Event(
@@ -68,112 +69,127 @@ class DispatchOrchestrator:
                 call_id=call.call_id,
                 payload={"error": str(exc)},
             ))
-            return {**state, "triage_error": str(exc)}
+            return {**state, "triage_error": str(exc), "triage_results": []}
 
-        await self.event_bus.publish(Event(
-            type=EventType.TRIAGE_COMPLETED,
-            call_id=call.call_id,
-            incident_id=result.incident_id,
-            payload={
-                "incident_type": result.incident_type.value,
-                "severity": result.severity.value,
-                "location_node_id": result.location_node_id,
-                "is_duplicate": result.is_duplicate,
-                "duplicate_of_call_id": result.duplicate_of_call_id,
-                "summary": result.summary,
-                "processing_time_ms": result.processing_time_ms,
-            },
-        ))
-
-        if result.is_duplicate:
+        # Publish one event per location result
+        for result in results:
             await self.event_bus.publish(Event(
-                type=EventType.DUPLICATE_DETECTED,
+                type=EventType.TRIAGE_COMPLETED,
                 call_id=call.call_id,
                 incident_id=result.incident_id,
                 payload={
+                    "incident_type": result.incident_type.value,
+                    "severity": result.severity.value,
+                    "location_node_id": result.location_node_id,
+                    "location_index": result.location_index,
+                    "is_duplicate": result.is_duplicate,
                     "duplicate_of_call_id": result.duplicate_of_call_id,
-                    "similarity": result.dedup_similarity,
+                    "summary": result.summary,
+                    "processing_time_ms": result.processing_time_ms,
                 },
             ))
-        else:
-            await self.event_bus.publish(Event(
-                type=EventType.INCIDENT_CREATED,
-                incident_id=result.incident_id,
-                payload=result.model_dump(mode="json"),
-            ))
 
-        return {**state, "triage_result": result}
-
-    async def _dispatch_node(self, state: DispatchGraphState) -> DispatchGraphState:
-        triage_result = state["triage_result"]
-        decision = await self.dispatch_agent.process(triage_result)
-
-        if decision is None:
-            return {**state, "dispatch_decision": None}
-
-        await self.event_bus.publish(Event(
-            type=EventType.DISPATCH_DECIDED,
-            incident_id=decision.incident_id,
-            payload=decision.model_dump(mode="json"),
-        ))
-
-        for assignment in decision.assignments:
-            await self.event_bus.publish(Event(
-                type=EventType.RESOURCE_DISPATCHED,
-                incident_id=decision.incident_id,
-                resource_id=assignment.resource_id,
-                payload={
-                    "call_sign": assignment.call_sign,
-                    "from_node_id": assignment.from_node_id,
-                    "to_node_id": assignment.to_node_id,
-                    "path": assignment.path,
-                    "travel_time_sec": assignment.travel_time_sec,
-                    "was_reassigned_from": assignment.was_reassigned_from,
-                },
-            ))
-            if assignment.was_reassigned_from:
+            if result.is_duplicate:
                 await self.event_bus.publish(Event(
-                    type=EventType.RESOURCE_REASSIGNED,
-                    incident_id=decision.incident_id,
-                    resource_id=assignment.resource_id,
-                    payload={"from_incident_id": assignment.was_reassigned_from},
+                    type=EventType.DUPLICATE_DETECTED,
+                    call_id=call.call_id,
+                    incident_id=result.incident_id,
+                    payload={
+                        "duplicate_of_call_id": result.duplicate_of_call_id,
+                        "similarity": result.dedup_similarity,
+                    },
+                ))
+            else:
+                await self.event_bus.publish(Event(
+                    type=EventType.INCIDENT_CREATED,
+                    incident_id=result.incident_id,
+                    payload=result.model_dump(mode="json"),
                 ))
 
-        if decision.unfulfilled_resources:
+        return {**state, "triage_results": results}
+
+    async def _dispatch_node(self, state: DispatchGraphState) -> DispatchGraphState:
+        triage_results = state.get("triage_results", [])
+        decisions: list = []
+
+        for triage_result in triage_results:
+            # Skip duplicates and unresolved locations — dispatch_agent handles
+            # duplicate counting internally; unresolved locations have no target node.
+            if triage_result.is_duplicate or triage_result.location_node_id is None:
+                decisions.append(None)
+                continue
+
+            decision = await self.dispatch_agent.process(triage_result)
+            decisions.append(decision)
+
+            if decision is None:
+                continue
+
             await self.event_bus.publish(Event(
-                type=EventType.UNFULFILLED_INCIDENT,
+                type=EventType.DISPATCH_DECIDED,
                 incident_id=decision.incident_id,
-                payload={"unfulfilled": [r.value for r in decision.unfulfilled_resources]},
+                payload=decision.model_dump(mode="json"),
             ))
 
-        return {**state, "dispatch_decision": decision}
+            for assignment in decision.assignments:
+                await self.event_bus.publish(Event(
+                    type=EventType.RESOURCE_DISPATCHED,
+                    incident_id=decision.incident_id,
+                    resource_id=assignment.resource_id,
+                    payload={
+                        "call_sign": assignment.call_sign,
+                        "from_node_id": assignment.from_node_id,
+                        "to_node_id": assignment.to_node_id,
+                        "path": assignment.path,
+                        "travel_time_sec": assignment.travel_time_sec,
+                        "was_reassigned_from": assignment.was_reassigned_from,
+                    },
+                ))
+                if assignment.was_reassigned_from:
+                    await self.event_bus.publish(Event(
+                        type=EventType.RESOURCE_REASSIGNED,
+                        incident_id=decision.incident_id,
+                        resource_id=assignment.resource_id,
+                        payload={"from_incident_id": assignment.was_reassigned_from},
+                    ))
+
+            if decision.unfulfilled_resources:
+                await self.event_bus.publish(Event(
+                    type=EventType.UNFULFILLED_INCIDENT,
+                    incident_id=decision.incident_id,
+                    payload={"unfulfilled": [r.value for r in decision.unfulfilled_resources]},
+                ))
+
+        return {**state, "dispatch_decisions": decisions}
 
     async def _skip_dispatch_node(self, state: DispatchGraphState) -> DispatchGraphState:
-        result = state.get("triage_result")
         reason = ""
         if state.get("triage_error"):
             reason = f"triage_error: {state['triage_error']}"
-        elif result and result.is_duplicate:
-            reason = "duplicate"
-            # Forward to dispatch_agent to increment the DB duplicate counter.
-            await self.dispatch_agent.process(result)
-        elif result and result.location_node_id is None:
-            reason = "unresolved_location"
-        return {**state, "dispatch_skipped": True, "dispatch_skip_reason": reason}
+        else:
+            # All results were duplicates or had unresolved locations.
+            # Forward duplicates to dispatch_agent so it increments the DB counter.
+            for result in state.get("triage_results", []):
+                if result.is_duplicate:
+                    await self.dispatch_agent.process(result)
+                    reason = reason or "duplicate"
+                elif result.location_node_id is None:
+                    reason = reason or "unresolved_location"
+        return {**state, "dispatch_skipped": True, "dispatch_skip_reason": reason, "dispatch_decisions": []}
 
     # -------- Routing --------
 
     def _route_after_triage(self, state: DispatchGraphState) -> Literal["dispatch", "skip"]:
         if state.get("triage_error"):
             return "skip"
-        result = state.get("triage_result")
-        if result is None:
+        results = state.get("triage_results")
+        if not results:
             return "skip"
-        if result.is_duplicate:
-            return "skip"
-        if result.location_node_id is None:
-            return "skip"
-        return "dispatch"
+        # Route to dispatch if at least one result is a new, resolved incident.
+        for result in results:
+            if not result.is_duplicate and result.location_node_id is not None:
+                return "dispatch"
+        return "skip"
 
     # -------- Public API --------
 

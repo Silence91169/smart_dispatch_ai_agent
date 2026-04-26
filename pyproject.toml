@@ -27,6 +27,7 @@ dependencies = [
     "uvicorn[standard]>=0.30",
     "langgraph>=0.2",
     "websockets>=13",
+    "greenlet>=3.4.0",
 ]
 
 [project.optional-dependencies]

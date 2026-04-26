@@ -158,8 +158,7 @@ class SimulationRunner:
             return
 
         self._stats["calls_processed"] += 1
-        triage = result.get("triage_result")
-        if triage:
+        for triage in result.get("triage_results", []):
             if triage.is_duplicate:
                 self._stats["duplicates_detected"] += 1
             else:
